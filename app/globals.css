@@ -17,7 +17,7 @@
   --foreground: var(--apt-ink);
 
   --navbar-height: 76px;
-  --hero-pad-y: clamp(20px, 3.2vh, 48px);
+  --hero-pad-y: clamp(16px, 2.4vh, 40px);
 }
 
 @media (min-width: 1024px) {
@@ -126,10 +126,25 @@ html {
   padding-block: var(--section-space-lg);
 }
 
-/* Hero — contenedor y grid propios, más anchos que apt-container */
+/* Hero — contenedor y grid propios, más anchos que apt-container.
+   Márgenes laterales reales (32px mínimo, 48–72px en escritorio) para que
+   ni el titular ni el panel toquen el borde del viewport. */
 .hero-shell {
-  width: min(100% - 3rem, 1440px);
+  width: min(100% - 64px, 1440px);
   margin-inline: auto;
+  container-type: inline-size;
+}
+
+@media (min-width: 1024px) {
+  .hero-shell {
+    width: min(100% - 96px, 1440px);
+  }
+}
+
+@media (min-width: 1440px) {
+  .hero-shell {
+    width: min(100% - 144px, 1440px);
+  }
 }
 
 .hero-section {
@@ -142,10 +157,33 @@ html {
   align-items: center;
 }
 
+@media (min-width: 1024px) {
+  .hero-section {
+    /* Reserva real para "Descubre más" — nunca se superpone al contenido. */
+    padding-bottom: calc(var(--hero-pad-y) + 56px);
+  }
+}
+
+/* Titular del hero — escala por el espacio real de su columna (container
+   query), no por el ancho crudo del viewport. Así 1440 y 1920 comparten
+   el mismo tope una vez que hero-shell alcanza su ancho máximo de 1440px,
+   en lugar de seguir creciendo solo porque la pantalla es más ancha. */
+.hero-title {
+  font-size: clamp(3.75rem, 7cqw, 6.25rem);
+  line-height: 0.88;
+  letter-spacing: -0.055em;
+}
+
+@container (min-width: 1180px) {
+  .hero-title {
+    font-size: clamp(4.25rem, 6.5cqw, 7.5rem);
+  }
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: 1fr;
-  row-gap: clamp(20px, 4vh, 26px);
+  row-gap: clamp(16px, 3.2vh, 22px);
   width: 100%;
 }
 
@@ -177,6 +215,8 @@ html {
   .hero-visual-frame {
     aspect-ratio: 4 / 5;
     border-radius: 28px;
+    /* Resta también la franja reservada para "Descubre más". */
+    max-height: calc(100svh - var(--navbar-height) - (var(--hero-pad-y) * 2) - 56px);
   }
 }
 
@@ -217,7 +257,32 @@ html {
   }
 }
 
-/* Sección Riviera App — escena grande a la derecha, pinneable por GSAP en desktop */
+/* Sección Riviera App — un viewport de alto, con contenido visible desde
+   que entra; el pin (si corre) solo añade el scrub necesario para las 4
+   etapas, no pantallas vacías extra. */
+.riviera-section {
+  min-height: 100svh;
+  padding-block: clamp(48px, 6vw, 80px);
+  display: flex;
+  align-items: center;
+}
+
+/* Composición de dos columnas — la derecha ocupa ~60% del ancho útil. */
+.riviera-stage {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(32px, 5vh, 48px);
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .riviera-stage {
+    grid-template-columns: minmax(360px, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(48px, 6vw, 96px);
+    align-items: center;
+  }
+}
+
 .riviera-visual-frame {
   position: relative;
   width: 100%;
@@ -234,7 +299,7 @@ html {
 
 @media (min-width: 1024px) {
   .riviera-visual-frame {
-    aspect-ratio: 4 / 3.4;
+    aspect-ratio: 5 / 4;
     border-radius: 28px;
   }
 }
@@ -246,14 +311,45 @@ html {
   align-items: center;
 }
 
+/* Solo visible en escritorio (>=1024px): en móvil/tablet el espacio
+   vertical ya está ajustado y esta pista no cabe sin apretar el resto. */
 .hero-scroll-cue {
-  position: absolute;
-  bottom: clamp(14px, 2vh, 28px);
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hero-scroll-cue {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    bottom: clamp(18px, 2.5vw, 32px);
+    transform: translateX(-50%);
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 20;
+  }
+}
+
+/* Se retira apenas el usuario empieza a hacer scroll — progressive
+   enhancement: sin soporte de scroll-timeline simplemente se queda fijo. */
+@supports (animation-timeline: scroll()) {
+  @media (min-width: 1024px) {
+    .hero-scroll-cue {
+      animation: hero-cue-fade linear forwards;
+      animation-timeline: scroll(root block);
+      animation-range: 0 15vh;
+    }
+  }
+}
+
+@keyframes hero-cue-fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 /* Scrollbar de carrusel de eventos: visible pero discreto */

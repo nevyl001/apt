@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { MessageCircle, AtSign } from "lucide-react";
 import { AptLogo } from "@/components/apt/AptLogo";
-import { instagram, whatsappGeneral } from "@/lib/data/links";
+import { instagram, rivieraOpen, whatsappGeneral } from "@/lib/data/links";
 
 export function AptFooter() {
   return (
-    <footer className="border-t border-border bg-navy-deep text-white">
+    <footer className="border-t border-white/10 bg-navy-deep text-white">
       <div className="apt-container flex flex-col gap-6 py-8 sm:flex-row sm:items-center sm:justify-between lg:py-10">
         <div className="flex items-center gap-4">
           <AptLogo variant="footer" onDark />
@@ -18,17 +18,28 @@ export function AptFooter() {
         </div>
 
         <div className="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-white/60">
-          <a href="#riviera-app" className="transition-colors hover:text-white">
+          <a
+            href="#riviera-app"
+            className="rounded-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise"
+          >
             Riviera App
           </a>
-          <span className="text-white/25">Riviera Open</span>
+          <a
+            href={rivieraOpen}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Ir al sitio oficial de Riviera Open"
+            className="rounded-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise"
+          >
+            Riviera Open
+          </a>
           {instagram && (
             <Link
               href={instagram}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="APT en Instagram"
-              className="transition-colors hover:text-white"
+              className="rounded-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise"
             >
               <AtSign className="size-4" />
             </Link>
@@ -37,10 +48,10 @@ export function AptFooter() {
             href={whatsappGeneral}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Escribir a APT por WhatsApp"
-            className="transition-colors hover:text-white"
+            aria-label="Contactar a APT por WhatsApp"
+            className="rounded-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise"
           >
-            <MessageCircle className="size-4" />
+            <MessageCircle aria-hidden="true" className="size-4" />
           </Link>
         </div>
       </div>

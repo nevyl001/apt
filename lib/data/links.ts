@@ -33,7 +33,12 @@ export const whatsappGeneral = buildWhatsAppUrl(
   "Hola, quiero más información sobre APT — Acapulco Padel Tour.",
 );
 
+/** Sitio oficial de Riviera Open — el ecosistema nacional al que se conecta APT. */
+export const rivieraOpen = "https://www.rivieraopen.com";
+
 // TODO: reemplazar por las URLs reales en cuanto APT tenga su cuenta activa en Riviera.
+// `rivieraApp` sigue pendiente a propósito: no existe todavía una URL propia de la
+// app (distinta de rivieraOpen) para la cuenta de APT — no se debe inventar una.
 export const rivieraApp: string | null = null;
 export const aptRanking: string | null = null;
 export const nationalRanking: string | null = null;

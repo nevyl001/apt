@@ -10,19 +10,19 @@ const TAGS: Tag[] = [
     label: "Ranking",
     value: "Nº 12 estatal",
     dot: "bg-turquoise",
-    style: { top: "10%", left: "8%" },
+    style: { top: "max(20px, 10%)", left: "max(20px, 8%)" },
   },
   {
     label: "Historial",
     value: "34 sets jugados",
     dot: "bg-lime",
-    style: { top: "38%", right: "6%" },
+    style: { top: "max(20px, 38%)", right: "max(20px, 6%)" },
   },
   {
     label: "Comunidad",
     value: "180+ jugadores",
     dot: "bg-white",
-    style: { top: "54%", left: "10%" },
+    style: { top: "max(20px, 54%)", left: "max(20px, 10%)" },
   },
 ];
 

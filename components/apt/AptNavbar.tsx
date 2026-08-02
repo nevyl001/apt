@@ -21,12 +21,41 @@ const NAV_ITEMS = [
 export function AptNavbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [activeHref, setActiveHref] = useState("#inicio");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const sections = NAV_ITEMS.map((item) =>
+      document.getElementById(item.href.slice(1)),
+    ).filter((el): el is HTMLElement => el !== null);
+    if (sections.length === 0) return;
+
+    // Franja de detección centrada en el viewport: la sección "activa" es la
+    // que ocupa esa franja, no la que apenas asoma arriba o abajo.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible.length === 0) return;
+        const id = visible[0].target.id;
+        const href = `#${id}`;
+        setActiveHref(href);
+        if (window.location.hash !== href) {
+          history.replaceState(null, "", href);
+        }
+      },
+      { rootMargin: "-40% 0px -40% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] },
+    );
+
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -54,7 +83,13 @@ export function AptNavbar() {
               <a
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="block whitespace-nowrap rounded-full px-3.5 py-2 text-sm font-medium text-ink/65 transition-colors hover:text-navy"
+                aria-current={activeHref === item.href ? "true" : undefined}
+                className={cn(
+                  "block whitespace-nowrap rounded-full px-3.5 py-2 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turquoise",
+                  activeHref === item.href
+                    ? "text-navy"
+                    : "text-ink/65 hover:text-navy",
+                )}
               >
                 {item.label}
               </a>

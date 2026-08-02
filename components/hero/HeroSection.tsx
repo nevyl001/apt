@@ -15,7 +15,7 @@ export function HeroSection() {
               Acapulco Padel Tour
             </p>
 
-            <h1 className="font-display mt-4 text-[clamp(3rem,7vw,7.5rem)] font-bold uppercase leading-[0.88] tracking-[-0.04em] text-navy-deep">
+            <h1 className="hero-title font-display mt-4 font-bold uppercase text-navy-deep">
               {TITLE_LINES.map((line) => (
                 <span key={line} className="block">
                   {line}
@@ -23,13 +23,13 @@ export function HeroSection() {
               ))}
             </h1>
 
-            <p className="mt-5 max-w-md text-[length:var(--text-body)] leading-relaxed text-muted">
+            <p className="mt-4 max-w-md text-[length:var(--text-body)] leading-relaxed text-muted">
               Una nueva comunidad de pádel en Acapulco creada para organizar
               mejores competencias, conectar jugadores y hacer que cada
               partido cuente.
             </p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-3 sm:gap-4">
+            <div className="mt-5 flex flex-wrap items-center gap-3 sm:gap-4">
               <MagneticButton href={whatsappCommunity} variant="lime" external>
                 Unirme a APT
               </MagneticButton>
@@ -38,7 +38,7 @@ export function HeroSection() {
               </MagneticButton>
             </div>
 
-            <p className="mt-5 text-xs font-medium uppercase tracking-[0.14em] text-muted sm:text-sm">
+            <p className="mt-4 text-xs font-medium uppercase tracking-[0.14em] text-muted sm:text-sm">
               Comunidad gestionada mediante Riviera App
             </p>
           </div>
@@ -52,9 +52,9 @@ export function HeroSection() {
       <a
         href="#nosotros"
         aria-label="Ir a la siguiente sección"
-        className="hero-scroll-cue group text-muted transition-colors hover:text-navy"
+        className="hero-scroll-cue group text-navy/70 transition-colors hover:text-navy"
       >
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em]">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.18em]">
           Descubre más
         </span>
         <ChevronDown
