@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+:root {
+  /* Identidad oficial APT — Acapulco Padel Tour */
+  --apt-navy: #002b6b;
+  --apt-navy-deep: #06152d;
+  --apt-turquoise: #00afc4;
+  --apt-lime: #a7d800;
+  --apt-white: #ffffff;
+
+  --apt-ink: #06152d;
+  --apt-muted: #627086;
+  --apt-surface: #f4f8fa;
+  --apt-border: rgba(0, 43, 107, 0.12);
+
+  --background: var(--apt-white);
+  --foreground: var(--apt-ink);
+}
+
+@theme inline {
+  --color-navy: var(--apt-navy);
+  --color-navy-deep: var(--apt-navy-deep);
+  --color-turquoise: var(--apt-turquoise);
+  --color-lime: var(--apt-lime);
+  --color-ink: var(--apt-ink);
+  --color-muted: var(--apt-muted);
+  --color-surface: var(--apt-surface);
+  --color-border: var(--apt-border);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --font-display: var(--font-montserrat);
+  --font-sans: var(--font-montserrat);
+
+  --container-page: 1600px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-montserrat), "Montserrat", Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Grano editorial sutil, usado como capa de textura sobre fondos oscuros/abstractos */
+.apt-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 180px 180px;
+}
+
+.apt-container {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .apt-container {
+    padding-inline: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .apt-container {
+    padding-inline: 4rem;
+  }
+}
+
+/* Scrollbar de carrusel de eventos: visible pero discreto */
+.apt-scroll-x {
+  scrollbar-width: thin;
+  scrollbar-color: var(--apt-turquoise) transparent;
+}
+
+.apt-scroll-x::-webkit-scrollbar {
+  height: 6px;
+}
+
+.apt-scroll-x::-webkit-scrollbar-thumb {
+  background-color: var(--apt-turquoise);
+  border-radius: 999px;
+}
