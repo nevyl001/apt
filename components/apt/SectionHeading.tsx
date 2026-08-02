@@ -40,7 +40,7 @@ export function SectionHeading({
         as="h2"
         splitBy="word"
         className={cn(
-          "font-display text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl",
+          "font-display text-[length:var(--heading-md)] font-bold leading-[1.08] tracking-tight",
           onDark ? "text-white" : "text-navy-deep",
         )}
       >

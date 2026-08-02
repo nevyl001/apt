@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 const SITE_URL = "https://www.acapulcopadeltour.com";
-const ROUTES = ["", "/eventos", "/ranking", "/resultados", "/comunidad", "/riviera-app"];
+const ROUTES = [""];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return ROUTES.map((route) => ({

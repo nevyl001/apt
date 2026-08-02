@@ -2,17 +2,20 @@
 
 import Link from "next/link";
 import { useRef } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { useReducedMotion } from "@/components/motion/ReducedMotionProvider";
 
 interface MagneticButtonProps {
-  href: string;
+  /** Si es null, el botón se muestra deshabilitado como "Disponible próximamente" — nunca se usa "#". */
+  href: string | null;
   children: React.ReactNode;
   variant?: "lime" | "turquoise" | "outline" | "outline-light";
+  size?: "md" | "sm";
   className?: string;
   showArrow?: boolean;
+  external?: boolean;
 }
 
 const variants: Record<NonNullable<MagneticButtonProps["variant"]>, string> = {
@@ -22,12 +25,19 @@ const variants: Record<NonNullable<MagneticButtonProps["variant"]>, string> = {
   "outline-light": "border border-white/30 text-white hover:border-white/70",
 };
 
+const sizes: Record<NonNullable<MagneticButtonProps["size"]>, string> = {
+  md: "px-6 py-3.5 text-sm",
+  sm: "px-5 py-3.5 text-sm",
+};
+
 export function MagneticButton({
   href,
   children,
   variant = "lime",
+  size = "md",
   className,
   showArrow = true,
+  external = false,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLAnchorElement>(null);
   const reduced = useReducedMotion();
@@ -37,15 +47,32 @@ export function MagneticButton({
   const springY = useSpring(y, { stiffness: 300, damping: 20 });
 
   function handleMove(e: React.MouseEvent<HTMLAnchorElement>) {
+    // Magnético extremadamente sutil: desplazamiento máximo de unos pocos px.
     if (reduced || !ref.current) return;
     const rect = ref.current.getBoundingClientRect();
-    x.set((e.clientX - rect.left - rect.width / 2) * 0.25);
-    y.set((e.clientY - rect.top - rect.height / 2) * 0.3);
+    x.set((e.clientX - rect.left - rect.width / 2) * 0.12);
+    y.set((e.clientY - rect.top - rect.height / 2) * 0.15);
   }
 
   function handleLeave() {
     x.set(0);
     y.set(0);
+  }
+
+  if (href === null) {
+    return (
+      <span
+        aria-disabled="true"
+        className={cn(
+          "inline-flex cursor-not-allowed items-center gap-2 rounded-full font-medium tracking-wide opacity-50",
+          sizes[size],
+          variants[variant],
+          className,
+        )}
+      >
+        Disponible próximamente
+      </span>
+    );
   }
 
   return (
@@ -56,10 +83,13 @@ export function MagneticButton({
       <Link
         ref={ref}
         href={href}
+        target={external ? "_blank" : undefined}
+        rel={external ? "noopener noreferrer" : undefined}
         onMouseMove={handleMove}
         onMouseLeave={handleLeave}
         className={cn(
-          "group inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-medium tracking-wide transition-colors duration-200",
+          "group inline-flex items-center gap-2 rounded-full font-medium tracking-wide transition-colors duration-200",
+          sizes[size],
           variants[variant],
           className,
         )}

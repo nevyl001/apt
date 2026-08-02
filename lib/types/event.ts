@@ -1,10 +1,10 @@
-export type EventFormat =
-  | "reta"
-  | "torneo"
-  | "liga"
-  | "americano"
-  | "duelo_2v2"
-  | "especial";
+/**
+ * Solo los formatos que se publican con fecha en la agenda pública.
+ * Retas, americanos, duelos y demás dinámicas internas se explican de
+ * forma informativa en la sección "Modalidades" (ver lib/data/community.ts),
+ * no como eventos agendados.
+ */
+export type EventFormat = "torneo" | "liga";
 
 export type EventStatus =
   | "upcoming"

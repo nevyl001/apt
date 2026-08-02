@@ -7,10 +7,3 @@ export interface Community {
   state: string;
   rivieraCommunityId: string;
 }
-
-export interface CommunityStat {
-  id: string;
-  label: string;
-  value: number | null;
-  suffix?: string;
-}

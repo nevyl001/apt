@@ -1,8 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useReducedMotion } from "@/components/motion/ReducedMotionProvider";
 import { cn } from "@/lib/utils/cn";
+import { DURATION, EASE_SECONDARY, STAGGER } from "@/lib/motion/tokens";
 
 interface RevealTextProps {
   children: string;
@@ -20,7 +21,7 @@ export function RevealText({
   className,
   splitBy = "word",
   delay = 0,
-  stagger = 0.045,
+  stagger = STAGGER.min,
 }: RevealTextProps) {
   const reduced = useReducedMotion();
   const Tag = motion[as];
@@ -36,21 +37,28 @@ export function RevealText({
       {units.map((unit, i) => (
         <span
           key={`${unit}-${i}`}
-          className="inline-block overflow-hidden align-bottom"
+          className={cn(
+            "inline-block overflow-hidden align-bottom",
+            // El espacio entre palabras se hace con margen, no con un
+            // carácter " " al final del inline-block: un espacio de texto
+            // ahí queda dentro del contexto de línea propio del
+            // inline-block y el navegador lo recorta (colapso de espacios
+            // en blanco al final de línea), desapareciendo visualmente en
+            // cuanto el título ocupa más de una línea.
+            splitBy === "word" && i < units.length - 1 && "mr-[0.28em]",
+          )}
         >
           <motion.span
             className="inline-block will-change-transform"
             initial={{ y: "110%", opacity: 0 }}
-            whileInView={{ y: "0%", opacity: 1 }}
-            viewport={{ once: true, margin: "-10%" }}
+            animate={{ y: "0%", opacity: 1 }}
             transition={{
-              duration: 0.6,
+              duration: DURATION.reveal,
               delay: delay + i * stagger,
-              ease: [0.16, 1, 0.3, 1],
+              ease: EASE_SECONDARY,
             }}
           >
             {unit}
-            {splitBy === "word" && i < units.length - 1 ? " " : ""}
           </motion.span>
         </span>
       ))}

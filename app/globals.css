@@ -15,6 +15,15 @@
 
   --background: var(--apt-white);
   --foreground: var(--apt-ink);
+
+  --navbar-height: 76px;
+  --hero-pad-y: clamp(20px, 3.2vh, 48px);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --navbar-height: 80px;
+  }
 }
 
 @theme inline {
@@ -32,7 +41,22 @@
   --font-display: var(--font-montserrat);
   --font-sans: var(--font-montserrat);
 
-  --container-page: 1600px;
+  --container-page: 1400px;
+
+  /* Escala tipográfica fluida — títulos editoriales */
+  --heading-sm: clamp(1.75rem, 2.5vw, 2.5rem);
+  --heading-md: clamp(2.75rem, 5vw, 5.5rem);
+  --heading-lg: clamp(3.5rem, 6vw, 7rem);
+  --heading-display: clamp(4rem, 7vw, 8rem);
+
+  /* Escala de texto — nada de cuerpos microscópicos en escritorio */
+  --text-body: clamp(1rem, 1.2vw, 1.125rem);
+  --text-small: clamp(0.875rem, 1vw, 1rem);
+
+  /* Ritmo vertical de sección — tres pesos, nunca huecos sin intención */
+  --section-space-sm: clamp(64px, 7vw, 96px);
+  --section-space-md: clamp(80px, 9vw, 128px);
+  --section-space-lg: clamp(96px, 11vw, 152px);
 }
 
 body {
@@ -72,22 +96,164 @@ html {
 }
 
 .apt-container {
-  width: 100%;
-  max-width: var(--container-page);
+  width: min(100% - 3rem, var(--container-page));
   margin-inline: auto;
-  padding-inline: 1.25rem;
 }
 
 @media (min-width: 768px) {
   .apt-container {
-    padding-inline: 2.5rem;
+    width: min(100% - 5rem, var(--container-page));
   }
 }
 
 @media (min-width: 1280px) {
   .apt-container {
-    padding-inline: 4rem;
+    width: min(100% - 8rem, var(--container-page));
   }
+}
+
+/* Ritmo vertical consistente de sección editorial — tres pesos, elegido
+   por sección según cuánto contenido/composición sostiene ese espacio. */
+.apt-section {
+  padding-block: var(--section-space-md);
+}
+
+.apt-section--sm {
+  padding-block: var(--section-space-sm);
+}
+
+.apt-section--lg {
+  padding-block: var(--section-space-lg);
+}
+
+/* Hero — contenedor y grid propios, más anchos que apt-container */
+.hero-shell {
+  width: min(100% - 3rem, 1440px);
+  margin-inline: auto;
+}
+
+.hero-section {
+  /* AptNavbar es "fixed": sin este margen, el hero pinta detrás de él y
+     pierde su franja superior (título/eyebrow) cuando el contenido es alto. */
+  margin-top: var(--navbar-height);
+  min-height: calc(100svh - var(--navbar-height));
+  padding-block: var(--hero-pad-y);
+  display: flex;
+  align-items: center;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: clamp(20px, 4vh, 26px);
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .hero-grid {
+    /* 46% / 54% del ancho disponible entre columnas */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.174fr);
+    column-gap: clamp(48px, 5vw, 96px);
+    align-items: center;
+  }
+}
+
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-visual-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  max-height: calc(100svh - var(--navbar-height) - (var(--hero-pad-y) * 2));
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .hero-visual-frame {
+    aspect-ratio: 4 / 5;
+    border-radius: 28px;
+  }
+}
+
+/* Sección "Quiénes somos" — visual editorial ancho, no un placeholder */
+.about-visual-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .about-visual-frame {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-visual-frame {
+    aspect-ratio: 21 / 9;
+    border-radius: 28px;
+  }
+}
+
+/* Sección "Formas de competir" — panel único que reacciona al formato activo */
+.formats-visual-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .formats-visual-frame {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* Sección Riviera App — escena grande a la derecha, pinneable por GSAP en desktop */
+.riviera-visual-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .riviera-visual-frame {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (min-width: 1024px) {
+  .riviera-visual-frame {
+    aspect-ratio: 4 / 3.4;
+    border-radius: 28px;
+  }
+}
+
+/* CTA final — impacto corto, no una pantalla vacía */
+.final-cta-section {
+  min-height: clamp(420px, 55vh, 600px);
+  display: flex;
+  align-items: center;
+}
+
+.hero-scroll-cue {
+  position: absolute;
+  bottom: clamp(14px, 2vh, 28px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* Scrollbar de carrusel de eventos: visible pero discreto */
