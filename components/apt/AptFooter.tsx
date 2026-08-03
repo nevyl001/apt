@@ -5,7 +5,7 @@ import { instagram, rivieraOpen, whatsappGeneral } from "@/lib/data/links";
 
 export function AptFooter() {
   return (
-    <footer className="border-t border-white/10 bg-navy-deep text-white">
+    <footer className="border-t border-white/10 bg-navy text-white">
       <div className="apt-container flex flex-col gap-6 py-8 sm:flex-row sm:items-center sm:justify-between lg:py-10">
         <div className="flex items-center gap-4">
           <AptLogo variant="footer" onDark />

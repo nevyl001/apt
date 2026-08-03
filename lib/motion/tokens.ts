@@ -33,3 +33,16 @@ export const microTransition = {
   duration: DURATION.micro,
   ease: EASE_SECONDARY,
 };
+
+/**
+ * Tokens para las escenas "cinematográficas" (Riviera App, CTA final).
+ * Mismo propósito que DURATION/EASE_* arriba — un solo lugar, nunca tiempos
+ * sueltos por archivo — con nombres más explícitos para ese contexto.
+ */
+export const motionTokens = {
+  easePremium: EASE_PRIMARY,
+  micro: DURATION.micro,
+  reveal: DURATION.reveal,
+  scene: 1.4,
+  stagger: STAGGER.max,
+} as const;

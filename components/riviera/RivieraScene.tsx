@@ -1,7 +1,7 @@
 "use client";
 
+import type { RefObject } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { useReducedMotion } from "@/components/motion/ReducedMotionProvider";
 import { rivieraOpen } from "@/lib/data/links";
 import { EASE_SECONDARY } from "@/lib/motion/tokens";
 
@@ -11,7 +11,6 @@ const PLAYERS = [
   { x: 160, y: 260 },
 ];
 
-/** Red nacional abstracta — sin ciudades reales, solo nodos genéricos. */
 const NETWORK_NODES = [
   { x: 90, y: 70 },
   { x: 410, y: 90 },
@@ -21,24 +20,27 @@ const NETWORK_NODES = [
 
 const ORIGIN = { x: 240, y: 195 };
 
-/**
- * Instantánea estática de una etapa (0–3), usada en móvil/tablet donde no
- * hay pin de scroll: la misma cancha, mismos nodos, misma pelota — cada
- * etapa suma una capa de información sobre la anterior.
- */
-export function RivieraVisual({ stage }: { stage: number }) {
-  const reduced = useReducedMotion();
+/** Trayectoria única: entra abajo-izquierda, cruza la red, rebota, sale arriba-derecha. */
+export const TRAJECTORY_D =
+  "M 30 340 C 100 300 160 250 240 195 C 300 150 255 95 300 60 C 340 28 420 18 460 8";
 
+interface RivieraSceneProps {
+  stage: number;
+  ballRef: RefObject<SVGCircleElement | null>;
+  trajectoryRef: RefObject<SVGPathElement | null>;
+}
+
+/**
+ * Escena de escritorio: la misma cancha que RivieraVisual, pero la pelota
+ * la controla GSAP MotionPath desde el padre (RivieraCinematic) a través
+ * de `ballRef`/`trajectoryRef` — su posición está atada al scrub del pin,
+ * no a `stage`. Las etiquetas (marcador, historial, ranking, red) sí
+ * reaccionan a `stage`, igual que en la versión estática.
+ */
+export function RivieraScene({ stage, ballRef, trajectoryRef }: RivieraSceneProps) {
   return (
     <div className="relative h-full w-full overflow-hidden bg-gradient-to-br from-navy via-navy to-navy-deep">
       <div className="apt-grain" />
-
-      <span
-        aria-hidden
-        className="font-display pointer-events-none absolute -right-2 -top-6 select-none text-[6.5rem] font-bold leading-none text-white/[0.06] sm:text-[8.5rem]"
-      >
-        {String(stage + 1).padStart(2, "0")}
-      </span>
 
       <svg
         aria-hidden
@@ -53,8 +55,6 @@ export function RivieraVisual({ stage }: { stage: number }) {
           strokeWidth={1.4}
         />
         <line x1="240" y1="90" x2="240" y2="300" stroke="rgba(255,255,255,0.08)" strokeWidth={1} />
-
-        {/* Etapa 1: trayectoria de juego punteada. Etapa 2+: línea de registro sólida. */}
         <line
           x1="118"
           y1="195"
@@ -69,15 +69,25 @@ export function RivieraVisual({ stage }: { stage: number }) {
         {PLAYERS.map((p, i) => (
           <circle key={i} cx={p.x} cy={p.y} r="6" fill="var(--apt-white)" fillOpacity={0.85} />
         ))}
-        <circle cx={ORIGIN.x} cy={ORIGIN.y} r="7" fill="var(--apt-lime)" />
 
-        {/* Etapa 3: mini tabla de ranking — tres posiciones, una sube. */}
+        {/* Trayectoria completa de la pelota — visible como hilo de fondo */}
+        <path
+          ref={trajectoryRef}
+          d={TRAJECTORY_D}
+          fill="none"
+          stroke="var(--apt-turquoise)"
+          strokeWidth={1.5}
+          strokeOpacity={0.35}
+          strokeDasharray="3 6"
+        />
+        <circle ref={ballRef} cx="30" cy="340" r="7" fill="var(--apt-lime)" />
+
         <AnimatePresence>
           {stage >= 2 && (
             <motion.g
-              initial={reduced ? undefined : { opacity: 0 }}
-              animate={reduced ? undefined : { opacity: 1 }}
-              exit={reduced ? undefined : { opacity: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.4 }}
             >
               {[0, 1, 2].map((row) => (
@@ -95,15 +105,14 @@ export function RivieraVisual({ stage }: { stage: number }) {
           )}
         </AnimatePresence>
 
-        {/* Etapa 4: red nacional abstracta — nodos genéricos, sin ciudades reales. */}
         <AnimatePresence>
           {stage >= 3 &&
             NETWORK_NODES.map((n, i) => (
               <motion.g
                 key={i}
-                initial={reduced ? undefined : { opacity: 0 }}
-                animate={reduced ? undefined : { opacity: 1 }}
-                exit={reduced ? undefined : { opacity: 0 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
               >
                 <line
@@ -129,9 +138,9 @@ export function RivieraVisual({ stage }: { stage: number }) {
               fill="none"
               stroke="var(--apt-lime)"
               strokeWidth={1.5}
-              initial={reduced ? undefined : { opacity: 0, scale: 0.6 }}
-              animate={reduced ? undefined : { opacity: 1, scale: 1 }}
-              exit={reduced ? undefined : { opacity: 0 }}
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.4 }}
             />
           )}
@@ -149,9 +158,9 @@ export function RivieraVisual({ stage }: { stage: number }) {
         <AnimatePresence>
           {stage >= 1 && (
             <motion.span
-              initial={reduced ? undefined : { opacity: 0, x: -12 }}
-              animate={reduced ? undefined : { opacity: 1, x: 0 }}
-              exit={reduced ? undefined : { opacity: 0, x: -12 }}
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -12 }}
               transition={{ duration: 0.4, ease: EASE_SECONDARY }}
               className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 backdrop-blur-sm"
             >
@@ -166,9 +175,9 @@ export function RivieraVisual({ stage }: { stage: number }) {
         <AnimatePresence>
           {stage >= 2 && (
             <motion.span
-              initial={reduced ? undefined : { opacity: 0, x: -12 }}
-              animate={reduced ? undefined : { opacity: 1, x: 0 }}
-              exit={reduced ? undefined : { opacity: 0, x: -12 }}
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -12 }}
               transition={{ duration: 0.4, ease: EASE_SECONDARY, delay: 0.05 }}
               className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 backdrop-blur-sm"
             >
@@ -193,9 +202,9 @@ export function RivieraVisual({ stage }: { stage: number }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Ir al sitio oficial de Riviera Open"
-              initial={reduced ? undefined : { opacity: 0 }}
-              animate={reduced ? undefined : { opacity: 1 }}
-              exit={reduced ? undefined : { opacity: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.4 }}
               className="font-display rounded-sm text-xs font-bold uppercase tracking-[0.16em] text-turquoise underline decoration-turquoise/40 underline-offset-4 transition-colors hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise"
             >

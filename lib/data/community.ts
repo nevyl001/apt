@@ -19,34 +19,72 @@ export const aboutParagraphs: string[] = [
   "Gestionamos nuestras competencias mediante Riviera App para registrar resultados, ranking e historial, y conectar a nuestros jugadores con el ecosistema nacional Riviera Open.",
 ];
 
-/** Dinámicas que APT puede organizar, mostradas solo de forma informativa. */
-export const competitionFormats: { name: string; description: string }[] = [
+export interface CompetitionFormat {
+  /** Identificador estable — también se usa para elegir la escena visual. */
+  id: string;
+  name: string;
+  /** Una línea, mostrada solo bajo la fila activa de la lista. */
+  descriptor: string;
+  /** Frase corta mostrada dentro del panel visual — distinta del descriptor. */
+  tagline: string;
+  /** Máximo tres, mostrados como texto separado por "·" dentro del panel. */
+  attributes: [string, string, string];
+}
+
+/**
+ * Dinámicas que APT puede organizar, mostradas solo de forma informativa.
+ * Retas abre la lista a propósito: es el formato más fácil de entender y
+ * la entrada natural a la sección. Formatos especiales cierra como opción
+ * avanzada.
+ */
+export const competitionFormats: CompetitionFormat[] = [
   {
+    id: "retas",
     name: "Retas",
-    description: "Encuentros casuales y frecuentes para jugar y medirte sin la presión de un cuadro eliminatorio.",
+    descriptor: "Encuentros libres, sin cuadro",
+    tagline: "Partidos flexibles para competir y registrar resultados.",
+    attributes: ["Flexible", "Frecuente", "Ranking"],
   },
   {
+    id: "americano",
     name: "Americano",
-    description: "Formato rotativo: te enfrentas a distintas parejas durante el evento, sumando puntos individuales.",
+    descriptor: "Rotación de parejas, puntos individuales",
+    tagline: "Cambias de pareja en cada ronda y sumas puntos propios.",
+    attributes: ["Rotación", "Individual", "Dinámico"],
   },
   {
-    name: "Duelo 2v2",
-    description: "Enfrentamiento directo entre dos parejas, pensado para retos puntuales entre jugadores de nivel similar.",
+    id: "duelo",
+    name: "Duelo 2 vs 2",
+    descriptor: "Enfrentamiento directo entre parejas",
+    tagline: "Dos parejas fijas, un resultado directo.",
+    attributes: ["Parejas fijas", "Directo", "Inmediato"],
   },
   {
+    id: "torneo-express",
     name: "Torneo Express",
-    description: "Competencia de formato corto, ideal para una sola jornada concentrada.",
+    descriptor: "Una jornada, grupos y final",
+    tagline: "Grupos rápidos con una final el mismo día.",
+    attributes: ["Una jornada", "Grupos", "Ritmo rápido"],
   },
   {
+    id: "ligas",
     name: "Ligas",
-    description: "Temporada regular con jornadas programadas y una tabla que se actualiza tras cada fecha.",
+    descriptor: "Temporada con tabla general",
+    tagline: "Jornadas programadas y una tabla que avanza contigo.",
+    attributes: ["Temporada", "Tabla", "Constancia"],
   },
   {
+    id: "torneos",
     name: "Torneos",
-    description: "Cuadro eliminatorio clásico, con categorías y fases bien definidas.",
+    descriptor: "Categorías y cuadro eliminatorio",
+    tagline: "Categorías y fases con un camino directo a la final.",
+    attributes: ["Categorías", "Eliminación", "Campeones"],
   },
   {
+    id: "especiales",
     name: "Formatos especiales",
-    description: "Dinámicas propias de APT diseñadas para necesidades específicas de la comunidad.",
+    descriptor: "Dinámicas a medida de la comunidad",
+    tagline: "Formatos diseñados a la medida de tu comunidad.",
+    attributes: ["Personalizable", "A medida", "Propio"],
   },
 ];

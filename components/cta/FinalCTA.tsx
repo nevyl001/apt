@@ -5,7 +5,15 @@ import { MagneticButton } from "@/components/motion/MagneticButton";
 import { RevealText } from "@/components/motion/RevealText";
 import { useReducedMotion } from "@/components/motion/ReducedMotionProvider";
 import { whatsappCommunity } from "@/lib/data/links";
-import { DURATION, EASE_PRIMARY, EASE_SECONDARY } from "@/lib/motion/tokens";
+import { motionTokens } from "@/lib/motion/tokens";
+
+const TRAIL_D =
+  "M 40 520 C 280 460, 520 340, 800 280 C 940 250, 1000 260, 1050 260 C 1160 260, 1240 290, 1300 320";
+
+const BALL_KEYFRAMES = {
+  cx: [40, 460, 800, 1050, 1300],
+  cy: [520, 400, 280, 255, 320],
+};
 
 export function FinalCTA() {
   const reduced = useReducedMotion();
@@ -13,66 +21,90 @@ export function FinalCTA() {
   return (
     <section
       id="contacto"
-      className="final-cta-section relative scroll-mt-20 overflow-hidden bg-navy"
+      className="final-cta-section scroll-mt-20 bg-navy"
     >
       <div className="apt-grain" />
 
-      <div aria-hidden className="absolute -left-16 bottom-0 size-72 rounded-full bg-turquoise/10 blur-3xl" />
-
+      {/* Cancha abstracta a sangre — hilo visual heredado de Riviera App */}
       <svg
         aria-hidden
-        viewBox="0 0 1200 500"
+        viewBox="0 0 1600 700"
         preserveAspectRatio="none"
-        className="pointer-events-none absolute inset-0 h-full w-full opacity-40"
+        className="pointer-events-none absolute inset-0 h-full w-full opacity-70"
       >
+        <polygon
+          points="120,660 1480,660 1260,120 340,120"
+          fill="none"
+          stroke="rgba(255,255,255,0.06)"
+          strokeWidth={1.2}
+        />
+        <line x1="800" y1="130" x2="800" y2="650" stroke="var(--apt-turquoise)" strokeOpacity={0.1} strokeWidth={1.5} />
+        <line x1="340" y1="390" x2="1260" y2="390" stroke="rgba(255,255,255,0.05)" strokeWidth={1} />
+
+        <circle cx="230" cy="560" r="2.5" fill="var(--apt-white)" opacity={0.25} />
+        <circle cx="1370" cy="230" r="2.5" fill="var(--apt-turquoise)" opacity={0.3} />
+        <circle cx="960" cy="560" r="2" fill="var(--apt-white)" opacity={0.2} />
+
         <motion.path
-          d="M -50 60 C 250 220, 550 40, 850 220 S 1150 420, 1260 380"
+          d={TRAIL_D}
           fill="none"
           stroke="var(--apt-turquoise)"
           strokeWidth={1.5}
-          initial={reduced ? undefined : { pathLength: 0 }}
-          whileInView={reduced ? undefined : { pathLength: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: DURATION.section * 1.5, ease: EASE_PRIMARY }}
+          initial={reduced ? undefined : { pathLength: 0, opacity: 0.6 }}
+          whileInView={reduced ? undefined : { pathLength: 1, opacity: 0.28 }}
+          animate={reduced ? { pathLength: 1, opacity: 0.28 } : undefined}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: motionTokens.scene, ease: motionTokens.easePremium }}
         />
-        <circle cx="850" cy="220" r="4" fill="var(--apt-lime)" opacity={0.8} />
-        <circle cx="180" cy="130" r="3" fill="var(--apt-white)" opacity={0.4} />
+
+        {reduced ? (
+          <circle cx={1300} cy={320} r={7} fill="var(--apt-lime)" />
+        ) : (
+          <motion.circle
+            r={7}
+            fill="var(--apt-lime)"
+            initial={{ cx: BALL_KEYFRAMES.cx[0], cy: BALL_KEYFRAMES.cy[0], opacity: 0 }}
+            whileInView={{ cx: BALL_KEYFRAMES.cx, cy: BALL_KEYFRAMES.cy, opacity: 1 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{
+              duration: motionTokens.scene,
+              ease: motionTokens.easePremium,
+              opacity: { duration: 0.3 },
+            }}
+          />
+        )}
       </svg>
 
-      <div className="apt-container relative w-full">
-        <div className="grid gap-10 lg:grid-cols-[1.3fr_auto] lg:items-center lg:gap-16">
-          <div>
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-turquoise">
-              Únete a la comunidad
-            </p>
-            <RevealText
-              as="h2"
-              splitBy="word"
-              className="font-display mt-3 max-w-2xl text-[length:var(--heading-md)] font-bold uppercase leading-[1.02] text-white"
-            >
+      <div className="final-cta-inner relative">
+        <div className="final-cta-copy">
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-turquoise">
+            Únete a la comunidad
+          </p>
+          <h2 className="final-cta-title font-display mt-3 font-bold uppercase text-white">
+            <RevealText as="span" splitBy="word">
               Tu próximo partido puede empezar aquí
             </RevealText>
-            <p className="mt-5 max-w-md text-[length:var(--text-body)] leading-relaxed text-white/70">
-              Únete a APT y forma parte de una comunidad creada para competir,
-              crecer y disfrutar el pádel.
-            </p>
-          </div>
-
-          <motion.div
-            initial={reduced ? undefined : { opacity: 0, y: 12 }}
-            whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: DURATION.reveal, delay: 0.15, ease: EASE_SECONDARY }}
-            className="flex flex-col items-start gap-4 lg:items-end"
-          >
-            <MagneticButton href={whatsappCommunity} variant="lime" external>
-              Unirme por WhatsApp
-            </MagneticButton>
-            <p className="text-xs font-medium uppercase tracking-[0.14em] text-white/40">
-              180+ jugadores · Acapulco, Guerrero
-            </p>
-          </motion.div>
+          </h2>
+          <p className="mt-5 max-w-md text-[length:var(--text-body)] leading-relaxed text-white/70">
+            Únete a APT y forma parte de una comunidad creada para competir,
+            crecer y disfrutar el pádel.
+          </p>
         </div>
+
+        <motion.div
+          initial={reduced ? undefined : { opacity: 0, y: 12 }}
+          whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: motionTokens.reveal, delay: 0.15, ease: motionTokens.easePremium }}
+          className="flex flex-col items-start gap-4"
+        >
+          <MagneticButton href={whatsappCommunity} variant="lime" external>
+            Unirme por WhatsApp
+          </MagneticButton>
+          <p className="text-xs font-medium uppercase tracking-[0.14em] text-white/40">
+            Comunidad de pádel en Acapulco, Guerrero
+          </p>
+        </motion.div>
       </div>
     </section>
   );
