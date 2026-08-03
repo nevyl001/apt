@@ -195,36 +195,6 @@ function TorneosScene() {
   );
 }
 
-function EspecialesScene() {
-  const modules = [
-    { x: 150, y: 130, w: 60, h: 44 },
-    { x: 225, y: 110, w: 44, h: 44 },
-    { x: 150, y: 190, w: 44, h: 60 },
-    { x: 220, y: 200, w: 70, h: 44 },
-    { x: 305, y: 140, w: 44, h: 90 },
-  ];
-  return (
-    <svg aria-hidden viewBox="0 0 480 380" className="absolute inset-0 h-full w-full" preserveAspectRatio="xMidYMid slice">
-      {modules.map((m, i) => (
-        <motion.rect
-          key={i}
-          x={m.x}
-          y={m.y}
-          width={m.w}
-          height={m.h}
-          rx={8}
-          fill="none"
-          stroke={i % 2 === 0 ? "var(--apt-lime)" : "rgba(255,255,255,0.3)"}
-          strokeWidth={1.4}
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ ...TRANSITION, delay: i * 0.04 }}
-        />
-      ))}
-    </svg>
-  );
-}
-
 const SCENES: Record<string, () => React.ReactElement> = {
   retas: RetasScene,
   americano: AmericanoScene,
@@ -232,7 +202,6 @@ const SCENES: Record<string, () => React.ReactElement> = {
   "torneo-express": TorneoExpressScene,
   ligas: LigasScene,
   torneos: TorneosScene,
-  especiales: EspecialesScene,
 };
 
 const SCENE_CAPTION: Record<string, string> = {
@@ -242,7 +211,6 @@ const SCENE_CAPTION: Record<string, string> = {
   "torneo-express": "Grupos hacia la final",
   ligas: "Temporada en curso",
   torneos: "Camino a la final",
-  especiales: "Diseñado a medida",
 };
 
 /**

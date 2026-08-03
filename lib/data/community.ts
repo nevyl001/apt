@@ -34,8 +34,7 @@ export interface CompetitionFormat {
 /**
  * Dinámicas que APT puede organizar, mostradas solo de forma informativa.
  * Retas abre la lista a propósito: es el formato más fácil de entender y
- * la entrada natural a la sección. Formatos especiales cierra como opción
- * avanzada.
+ * la entrada natural a la sección.
  */
 export const competitionFormats: CompetitionFormat[] = [
   {
@@ -79,12 +78,5 @@ export const competitionFormats: CompetitionFormat[] = [
     descriptor: "Categorías y cuadro eliminatorio",
     tagline: "Categorías y fases con un camino directo a la final.",
     attributes: ["Categorías", "Eliminación", "Campeones"],
-  },
-  {
-    id: "especiales",
-    name: "Formatos especiales",
-    descriptor: "Dinámicas a medida de la comunidad",
-    tagline: "Formatos diseñados a la medida de tu comunidad.",
-    attributes: ["Personalizable", "A medida", "Propio"],
   },
 ];
