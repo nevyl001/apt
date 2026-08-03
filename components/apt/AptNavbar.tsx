@@ -63,6 +63,21 @@ export function AptNavbar() {
     };
   }, [open]);
 
+  function handleNavClick(
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) {
+    // Inicio = tope real de página; el ancla #inicio con scroll nativo
+    // tapaba el título bajo el header fixed.
+    if (href === "#inicio") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      history.replaceState(null, "", "#inicio");
+      setActiveHref("#inicio");
+    }
+    setOpen(false);
+  }
+
   return (
     <>
       <header
@@ -81,7 +96,7 @@ export function AptNavbar() {
               <li key={item.href}>
                 <a
                   href={item.href}
-                  onClick={() => setOpen(false)}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   aria-current={activeHref === item.href ? "true" : undefined}
                   className={cn(
                     "block whitespace-nowrap rounded-full px-3.5 py-2 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turquoise",
@@ -148,7 +163,7 @@ export function AptNavbar() {
                   >
                     <a
                       href={item.href}
-                      onClick={() => setOpen(false)}
+                      onClick={(e) => handleNavClick(e, item.href)}
                       className="block border-b border-border py-4 font-display text-2xl font-bold text-navy-deep"
                     >
                       {item.label}

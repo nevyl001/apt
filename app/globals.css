@@ -148,11 +148,14 @@ html {
 }
 
 .hero-section {
-  /* AptNavbar es "fixed": sin este margen, el hero pinta detrás de él y
-     pierde su franja superior (título/eyebrow) cuando el contenido es alto. */
-  margin-top: var(--navbar-height);
-  min-height: calc(100svh - var(--navbar-height));
-  padding-block: var(--hero-pad-y);
+  /* Padding (no margin): al navegar a #inicio el margen se sale del
+     viewport y el título queda debajo del header fixed. El padding sí
+     viaja con la caja del ancla y mantiene el eyebrow/título visibles. */
+  box-sizing: border-box;
+  min-height: 100svh;
+  padding-top: calc(var(--navbar-height) + var(--hero-pad-y));
+  padding-bottom: var(--hero-pad-y);
+  scroll-margin-top: 0;
   display: flex;
   align-items: center;
 }
@@ -243,23 +246,11 @@ html {
 }
 
 /* Sección "Formas de competir".
+   Márgenes laterales = `.apt-container` (igual que Nosotros/Eventos).
    Visibilidad lista/tabs: SOLO Tailwind en JSX
-   (`hidden lg:flex lg:flex-col` / `flex lg:hidden`).
-   Estas clases NO definen `display`. */
+   (`hidden lg:flex lg:flex-col` / `flex lg:hidden`). */
 .formats-section {
-  padding-block: clamp(56px, 7vw, 96px);
   overflow-x: clip;
-}
-
-.formats-section-inner {
-  width: min(calc(100% - 2.5rem), 1200px);
-  margin-inline: auto;
-}
-
-@media (min-width: 768px) {
-  .formats-section-inner {
-    width: min(calc(100% - 4rem), 1200px);
-  }
 }
 
 .formats-layout {
@@ -272,15 +263,9 @@ html {
 
 @media (min-width: 1024px) {
   .formats-layout {
-    grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.15fr);
-    gap: clamp(2rem, 4vw, 3.5rem);
-    align-items: start;
-  }
-}
-
-@media (min-width: 1024px) {
-  .formats-list {
-    max-width: 22rem;
+    grid-template-columns: minmax(260px, 1fr) minmax(0, 1.15fr);
+    gap: clamp(2.5rem, 4vw, 4rem);
+    align-items: center;
   }
 }
 
@@ -289,6 +274,7 @@ html {
   flex-direction: column;
   gap: 1.25rem;
   min-width: 0;
+  justify-content: center;
 }
 
 .formats-heading {
@@ -355,65 +341,60 @@ html {
   }
 }
 
-/* Sección Riviera App — contenedor amplio propio (como el hero), visible
-   por completo desde que entra al viewport. */
-.riviera-inner {
-  width: min(calc(100% - 64px), 1440px);
-  margin-inline: auto;
+/* Sección Riviera App.
+   En desktop el pin actúa sobre `.riviera-pin` (full-bleed, centrado).
+   El contenido vive en `.riviera-inner` con márgenes simétricos para que
+   al scrubelear la pelota el panel no se pegue al borde ni se descuadre. */
+.riviera-section {
+  background: var(--apt-navy-deep);
+}
+
+.riviera-pin {
+  width: 100%;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: var(--navbar-height);
+  padding-bottom: clamp(24px, 3vh, 40px);
+  box-sizing: border-box;
 }
 
 .riviera-viewport {
-  min-height: calc(100svh - var(--navbar-height));
   padding-block: clamp(48px, 6vw, 80px);
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-/* Layout de escritorio: texto amplio + escena grande — la escena ocupa
-   la mayor parte del panel derecho. */
 .riviera-stage {
   display: grid;
   grid-template-columns: 1fr;
   gap: clamp(24px, 3vh, 36px);
   width: 100%;
+  align-items: center;
 }
 
 @media (min-width: 1024px) {
   .riviera-stage {
-    grid-template-columns: minmax(420px, 0.85fr) minmax(0, 1.15fr);
-    gap: clamp(56px, 6vw, 104px);
-    align-items: center;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: clamp(2rem, 3.5vw, 3.5rem);
   }
-}
-
-/* Tablet: una columna amplia, tabs arriba, escena debajo — no una versión
-   comprimida del layout de escritorio. */
-.riviera-stage--tablet {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(28px, 4vw, 40px);
-  width: 100%;
-  max-width: 640px;
-  margin-inline: auto;
 }
 
 .riviera-visual-frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 11;
+  max-height: min(58svh, 520px);
+  min-height: 280px;
   border-radius: 20px;
   overflow: hidden;
 }
 
-@media (min-width: 640px) {
-  .riviera-visual-frame {
-    aspect-ratio: 16 / 10;
-  }
-}
-
 @media (min-width: 1024px) {
   .riviera-visual-frame {
-    aspect-ratio: 6 / 5;
+    min-height: 360px;
     border-radius: 24px;
   }
 }

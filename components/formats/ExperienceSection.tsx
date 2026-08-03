@@ -103,9 +103,9 @@ export function ExperienceSection() {
   return (
     <section
       id="experiencia"
-      className="formats-section scroll-mt-20 bg-surface"
+      className="formats-section apt-section scroll-mt-20 bg-surface"
     >
-      <div className="formats-section-inner">
+      <div className="apt-container">
         <div className="formats-layout">
           <div className="formats-copy">
             <header className="formats-heading">

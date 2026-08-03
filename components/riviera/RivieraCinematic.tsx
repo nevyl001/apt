@@ -6,7 +6,7 @@ import { MagneticButton } from "@/components/motion/MagneticButton";
 import { RivieraVisual } from "@/components/riviera/RivieraVisual";
 import { RivieraScene } from "@/components/riviera/RivieraScene";
 import { useReducedMotion } from "@/components/motion/ReducedMotionProvider";
-import { rivieraOpen } from "@/lib/data/links";
+import { aptRanking } from "@/lib/data/links";
 import { EASE_SECONDARY } from "@/lib/motion/tokens";
 
 interface Stage {
@@ -56,7 +56,11 @@ function StageControls({
   onSelect: (i: number) => void;
 }) {
   return (
-    <div className="flex flex-wrap gap-2" role="tablist" aria-label="Etapas de Riviera App">
+    <div
+      className="flex flex-wrap gap-2"
+      role="tablist"
+      aria-label="Etapas de Riviera App"
+    >
       {STAGES.map((s, i) => (
         <button
           key={s.tab}
@@ -79,14 +83,25 @@ function StageControls({
 }
 
 function RivieraCTA() {
+  // aptRanking sigue en null hasta que APT pase el link real
+  // (lib/data/links.ts). Mientras tanto el botón muestra el copy final
+  // sin "próximamente" y sin href roto.
+  if (aptRanking) {
+    return (
+      <div className="mt-6">
+        <MagneticButton href={aptRanking} variant="turquoise" external>
+          Ir al ranking APT
+        </MagneticButton>
+      </div>
+    );
+  }
+
   return (
-    <div className="mt-6 flex flex-col items-start gap-2">
-      <MagneticButton href={rivieraOpen} variant="turquoise" external>
-        Conocer Riviera Open
-      </MagneticButton>
-      <p className="text-xs text-white/35">
-        Integración con Riviera App — próximamente
-      </p>
+    <div className="mt-6">
+      <span className="inline-flex items-center gap-2 rounded-full bg-turquoise px-6 py-3.5 text-sm font-medium tracking-wide text-white">
+        Ir al ranking APT
+        <span aria-hidden>→</span>
+      </span>
     </div>
   );
 }
@@ -132,9 +147,9 @@ function StageCopy({ stage }: { stage: number }) {
 export function RivieraCinematic() {
   const reduced = useReducedMotion();
   const [stage, setStage] = useState(0);
-  const [tabletStage, setTabletStage] = useState(0);
+  const [mobileStage, setMobileStage] = useState(0);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const stickyRef = useRef<HTMLDivElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
   const ballRef = useRef<SVGCircleElement>(null);
   const trajectoryRef = useRef<SVGPathElement>(null);
   const triggerRef = useRef<ScrollTriggerLike | null>(null);
@@ -153,7 +168,7 @@ export function RivieraCinematic() {
       const gsap = gsapModule.default;
       const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
       const MotionPathPlugin = motionPathModule.MotionPathPlugin;
-      if (cancelled || !wrapperRef.current || !stickyRef.current) return;
+      if (cancelled || !wrapperRef.current || !pinRef.current) return;
 
       gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
@@ -167,9 +182,10 @@ export function RivieraCinematic() {
               scrollTrigger: {
                 trigger: wrapperRef.current,
                 start: "top top",
-                end: "+=260%",
-                scrub: 0.75,
-                pin: stickyRef.current,
+                end: "+=220%",
+                scrub: 0.7,
+                pin: pinRef.current,
+                pinSpacing: true,
                 anticipatePin: 1,
                 invalidateOnRefresh: true,
                 onUpdate: (self) => {
@@ -195,6 +211,7 @@ export function RivieraCinematic() {
             }
 
             triggerRef.current = tl.scrollTrigger ?? null;
+            requestAnimationFrame(() => ScrollTrigger.refresh());
 
             return () => {
               triggerRef.current = null;
@@ -212,9 +229,6 @@ export function RivieraCinematic() {
   }, [reduced]);
 
   function goToStage(i: number) {
-    // Actualiza de inmediato: el control nunca depende solo del scroll
-    // para reflejar el cambio (funciona igual con teclado o con
-    // prefers-reduced-motion, donde no existe ScrollTrigger).
     setStage(i);
     const st = triggerRef.current;
     if (st) {
@@ -226,81 +240,53 @@ export function RivieraCinematic() {
   return (
     <section
       id="riviera-app"
-      className="riviera-viewport relative scroll-mt-20 overflow-hidden bg-navy-deep"
+      className="riviera-section relative scroll-mt-20 overflow-x-clip bg-navy-deep"
     >
-      {/* Desktop (>=1024px): escena pinneada, pelota controlada por GSAP MotionPath */}
+      {/* Desktop: texto + escena, pin + pelota al scroll */}
       <div ref={wrapperRef} className="hidden w-full lg:block">
-        <div ref={stickyRef} className="riviera-inner">
+        <div ref={pinRef} className="riviera-pin">
+          <div className="apt-container">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-turquoise">
+              Tecnología para competir mejor
+            </p>
+
+            <div className="riviera-stage mt-5">
+              <div className="min-w-0">
+                <StageControls stage={stage} onSelect={goToStage} />
+                <StageCopy stage={stage} />
+                <RivieraCTA />
+              </div>
+
+              <div className="riviera-visual-frame">
+                <RivieraScene
+                  stage={stage}
+                  ballRef={ballRef}
+                  trajectoryRef={trajectoryRef}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Móvil / tablet: una sola escena con tabs — sin repetir las 4 etapas */}
+      <div className="riviera-viewport flex w-full lg:hidden">
+        <div className="apt-container w-full">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-turquoise">
             Tecnología para competir mejor
           </p>
 
-          <div className="riviera-stage mt-6">
-            <div>
-              <StageControls stage={stage} onSelect={goToStage} />
-              <StageCopy stage={stage} />
-              <RivieraCTA />
-            </div>
+          <div className="mt-6 flex flex-col gap-6">
+            <StageControls stage={mobileStage} onSelect={setMobileStage} />
 
             <div className="riviera-visual-frame">
-              <RivieraScene stage={stage} ballRef={ballRef} trajectoryRef={trajectoryRef} />
+              <RivieraVisual stage={mobileStage} />
             </div>
+
+            <StageCopy stage={mobileStage} />
+            <RivieraCTA />
           </div>
         </div>
-      </div>
-
-      {/* Tablet (768–1023px): una columna amplia, tabs arriba, escena debajo — sin pin */}
-      <div className="riviera-inner hidden w-full md:block lg:hidden">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-turquoise">
-          Tecnología para competir mejor
-        </p>
-        <div className="riviera-stage--tablet mt-6">
-          <StageControls stage={tabletStage} onSelect={setTabletStage} />
-          <div className="riviera-visual-frame">
-            <RivieraVisual stage={tabletStage} />
-          </div>
-          <StageCopy stage={tabletStage} />
-          <RivieraCTA />
-        </div>
-      </div>
-
-      {/* Móvil (<768px): las 4 etapas apiladas, cada una con su propio
-          texto y su propia instantánea visual — sin pin, sin controles. */}
-      <div className="riviera-inner w-full md:hidden">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-turquoise">
-          Tecnología para competir mejor
-        </p>
-
-        <div className="mt-8 flex flex-col gap-10">
-          {STAGES.map((s, i) => (
-            <div key={s.tab}>
-              <p className="font-display text-sm font-bold text-turquoise">
-                {String(i + 1).padStart(2, "0")} / 04
-              </p>
-              <h2 className="font-display mt-2 text-[length:var(--heading-sm)] font-bold uppercase leading-[1.05] text-white">
-                {s.title}
-              </h2>
-              <p className="mt-3 max-w-lg text-[length:var(--text-body)] leading-relaxed text-white/65">
-                {s.text}
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {s.benefits.map((b) => (
-                  <span
-                    key={b}
-                    className="rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-white/70"
-                  >
-                    {b}
-                  </span>
-                ))}
-              </div>
-              <div className="riviera-visual-frame mt-5">
-                <RivieraVisual stage={i} />
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <RivieraCTA />
       </div>
     </section>
   );

@@ -46,7 +46,7 @@ export function RivieraScene({ stage, ballRef, trajectoryRef }: RivieraSceneProp
         aria-hidden
         viewBox="0 0 480 380"
         className="absolute inset-0 h-full w-full"
-        preserveAspectRatio="xMidYMid slice"
+        preserveAspectRatio="xMidYMid meet"
       >
         <polygon
           points="90,300 390,300 350,90 130,90"
