@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { RevealText } from "@/components/motion/RevealText";
 import { FormatsVisual } from "@/components/formats/FormatsVisual";
 import { competitionFormats } from "@/lib/data/community";
 import { cn } from "@/lib/utils/cn";
@@ -42,32 +41,24 @@ function FormatRow({
       onBlur={onClearPreview}
       onClick={onCommit}
       onKeyDown={onKeyDown}
-      className="formats-list-item block w-full border-b border-border/70 text-left focus-visible:outline-none"
+      className="formats-list-item flex w-full items-center gap-3 border-b border-border/60 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/40"
     >
-      <span className="flex items-baseline gap-4">
-        <span
-          className={cn(
-            "font-display w-6 shrink-0 text-sm font-bold transition-colors",
-            highlighted ? "text-turquoise" : "text-navy/35",
-          )}
-        >
-          {String(index + 1).padStart(2, "0")}
-        </span>
-        <span
-          className={cn(
-            "font-display text-base font-bold uppercase tracking-tight transition-colors sm:text-lg",
-            highlighted ? "text-navy-deep" : "text-navy/55",
-          )}
-        >
-          {format.name}
-        </span>
+      <span
+        className={cn(
+          "font-display w-7 shrink-0 text-[13px] font-bold tabular-nums transition-colors",
+          highlighted ? "text-turquoise" : "text-navy/30",
+        )}
+      >
+        {String(index + 1).padStart(2, "0")}
       </span>
-
-      {isActive && (
-        <p className="formats-list-description pl-10 text-muted">
-          {format.descriptor}
-        </p>
-      )}
+      <span
+        className={cn(
+          "font-display text-[15px] font-bold uppercase tracking-tight transition-colors",
+          highlighted ? "text-navy-deep" : "text-navy/50",
+        )}
+      >
+        {format.name}
+      </span>
     </button>
   );
 }
@@ -102,7 +93,11 @@ export function ExperienceSection() {
     setActive(i);
     setPreview(null);
     const tab = tabsRef.current?.children[i] as HTMLElement | undefined;
-    tab?.scrollIntoView({ inline: "nearest", block: "nearest", behavior: "smooth" });
+    tab?.scrollIntoView({
+      inline: "nearest",
+      block: "nearest",
+      behavior: "smooth",
+    });
   }
 
   return (
@@ -113,24 +108,19 @@ export function ExperienceSection() {
       <div className="formats-section-inner">
         <div className="formats-layout">
           <div className="formats-copy">
-            <div>
-              <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-turquoise">
+            <header className="formats-heading">
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-turquoise">
                 Formas de competir
               </p>
-              <RevealText
-                as="h2"
-                splitBy="word"
-                className="formats-title font-display font-bold text-navy-deep"
-              >
+              <h2 className="formats-title font-display font-bold text-navy-deep">
                 Elige cómo quieres jugar
-              </RevealText>
-              <p className="mt-4 max-w-sm text-[length:var(--text-body)] leading-relaxed text-muted">
+              </h2>
+              <p className="formats-lead text-muted">
                 APT organiza desde encuentros casuales hasta ligas y torneos
                 completos.
               </p>
-            </div>
+            </header>
 
-            {/* Escritorio: lista vertical. Visibilidad solo vía Tailwind. */}
             <div
               className="formats-list hidden lg:flex lg:flex-col"
               role="group"
@@ -156,7 +146,6 @@ export function ExperienceSection() {
               ))}
             </div>
 
-            {/* Móvil / tablet: tabs horizontales. Visibilidad solo vía Tailwind. */}
             <div
               ref={tabsRef}
               className="formats-tabs flex lg:hidden"
@@ -170,7 +159,7 @@ export function ExperienceSection() {
                   aria-pressed={active === i}
                   onClick={() => selectMobile(i)}
                   className={cn(
-                    "formats-tab rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turquoise",
+                    "formats-tab rounded-full border px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turquoise",
                     active === i
                       ? "border-turquoise/50 bg-turquoise/10 text-navy-deep"
                       : "border-border text-ink/55 hover:border-navy/30",
@@ -189,10 +178,6 @@ export function ExperienceSection() {
             />
           </div>
         </div>
-
-        <p className="mt-6 text-center text-sm text-muted lg:mt-8">
-          También podemos crear formatos especiales para tu comunidad.
-        </p>
       </div>
     </section>
   );

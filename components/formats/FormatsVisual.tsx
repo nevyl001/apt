@@ -273,37 +273,43 @@ export function FormatsVisual({ formatId, number }: FormatsVisualProps) {
         </motion.div>
       </AnimatePresence>
 
-      <div className="absolute left-6 top-6 right-6 sm:left-9 sm:top-9 sm:right-9">
-        <p className="text-xs font-medium uppercase tracking-[0.16em] text-white/40">
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 bg-gradient-to-b from-navy-deep/90 via-navy-deep/40 to-transparent px-5 pb-16 pt-5 sm:px-7 sm:pt-6">
+        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/40">
           Formato {number}
         </p>
         <AnimatePresence mode="wait">
           <motion.div
             key={formatId}
-            initial={reduced ? undefined : { opacity: 0, y: 8 }}
+            initial={reduced ? undefined : { opacity: 0, y: 6 }}
             animate={reduced ? undefined : { opacity: 1, y: 0 }}
-            exit={reduced ? undefined : { opacity: 0, y: -8 }}
+            exit={reduced ? undefined : { opacity: 0, y: -6 }}
             transition={TRANSITION}
           >
-            <h3 className="font-display mt-1 text-3xl font-bold uppercase text-white sm:text-4xl">
+            <h3 className="font-display mt-1 text-2xl font-bold uppercase text-white sm:text-3xl">
               {format.name}
             </h3>
-            <p className="mt-2 max-w-xs text-sm leading-snug text-white/60 sm:max-w-sm">
+            <p className="mt-1.5 max-w-sm text-sm leading-snug text-white/65">
               {format.tagline}
             </p>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      <div className="absolute bottom-6 left-6 right-6 sm:bottom-9 sm:left-9 sm:right-9">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-navy-deep/95 via-navy-deep/50 to-transparent px-5 pb-5 pt-14 sm:px-7 sm:pb-6">
         <AnimatePresence mode="wait">
-          <motion.div key={formatId} initial={reduced ? undefined : { opacity: 0 }} animate={{ opacity: 1 }} exit={reduced ? undefined : { opacity: 0 }} transition={TRANSITION}>
+          <motion.div
+            key={formatId}
+            initial={reduced ? undefined : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={reduced ? undefined : { opacity: 0 }}
+            transition={TRANSITION}
+          >
             {caption && (
-              <p className="mb-1.5 text-xs font-medium uppercase tracking-[0.14em] text-turquoise/80">
+              <p className="mb-1 text-[11px] font-medium uppercase tracking-[0.14em] text-turquoise/85">
                 {caption}
               </p>
             )}
-            <p className="text-xs font-medium uppercase tracking-[0.1em] text-white/45">
+            <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-white/45">
               {format.attributes.join(" · ")}
             </p>
           </motion.div>
