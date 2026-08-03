@@ -184,7 +184,7 @@ export function RivieraVisual({ stage }: { stage: number }) {
 
       <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between sm:bottom-8 sm:left-8 sm:right-8">
         <p className="text-xs font-medium uppercase tracking-[0.16em] text-white/40">
-          Riviera App
+          App Riviera
         </p>
         <AnimatePresence>
           {stage >= 3 && (

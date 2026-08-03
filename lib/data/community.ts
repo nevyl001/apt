@@ -16,7 +16,7 @@ export const community: Community = {
 
 export const aboutParagraphs: string[] = [
   "APT — Acapulco Padel Tour nace para crear una experiencia de competencia mejor organizada, cercana y con mayor valor para cada jugador.",
-  "Gestionamos nuestras competencias mediante Riviera App para registrar resultados, ranking e historial, y conectar a nuestros jugadores con el ecosistema nacional Riviera Open.",
+  "Gestionamos nuestras competencias mediante App Riviera para registrar resultados, ranking e historial, y conectar a nuestros jugadores con el ecosistema nacional Riviera Open.",
 ];
 
 export interface CompetitionFormat {

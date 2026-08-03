@@ -1,6 +1,6 @@
 /**
  * Enlaces externos centralizados — único lugar que se debe editar para
- * actualizar el contacto de WhatsApp y los enlaces a Riviera App /
+ * actualizar el contacto de WhatsApp y los enlaces a App Riviera /
  * Riviera Open en todo el sitio.
  *
  * Los valores en `null` son enlaces PENDIENTES: APT todavía no tiene esa

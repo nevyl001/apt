@@ -14,7 +14,7 @@ const NAV_ITEMS = [
   { href: "#nosotros", label: "Nosotros" },
   { href: "#eventos", label: "Eventos" },
   { href: "#experiencia", label: "Experiencia APT" },
-  { href: "#riviera-app", label: "Riviera App" },
+  { href: "#app-riviera", label: "App Riviera" },
   { href: "#contacto", label: "Contacto" },
 ];
 

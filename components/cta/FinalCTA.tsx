@@ -25,7 +25,7 @@ export function FinalCTA() {
     >
       <div className="apt-grain" />
 
-      {/* Cancha abstracta a sangre — hilo visual heredado de Riviera App */}
+      {/* Cancha abstracta a sangre — hilo visual heredado de App Riviera */}
       <svg
         aria-hidden
         viewBox="0 0 1600 700"

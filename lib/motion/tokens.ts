@@ -35,7 +35,7 @@ export const microTransition = {
 };
 
 /**
- * Tokens para las escenas "cinematográficas" (Riviera App, CTA final).
+ * Tokens para las escenas "cinematográficas" (App Riviera, CTA final).
  * Mismo propósito que DURATION/EASE_* arriba — un solo lugar, nunca tiempos
  * sueltos por archivo — con nombres más explícitos para ese contexto.
  */

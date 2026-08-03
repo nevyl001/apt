@@ -1,5 +1,5 @@
 /**
- * Cliente de integración con Riviera App / Riviera Open.
+ * Cliente de integración con App Riviera / Riviera Open.
  *
  * Hoy no existe integración activa: no hay credenciales ni endpoint
  * confirmados. Este módulo deja el punto de extensión listo para cuando

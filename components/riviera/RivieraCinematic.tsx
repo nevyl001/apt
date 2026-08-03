@@ -59,7 +59,7 @@ function StageControls({
     <div
       className="flex flex-wrap gap-2"
       role="tablist"
-      aria-label="Etapas de Riviera App"
+      aria-label="Etapas de App Riviera"
     >
       {STAGES.map((s, i) => (
         <button
@@ -239,7 +239,7 @@ export function RivieraCinematic() {
 
   return (
     <section
-      id="riviera-app"
+      id="app-riviera"
       className="riviera-section relative scroll-mt-20 overflow-x-clip bg-navy-deep"
     >
       {/* Desktop: texto + escena, pin + pelota al scroll */}

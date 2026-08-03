@@ -19,10 +19,10 @@ export function AptFooter() {
 
         <div className="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-white/60">
           <a
-            href="#riviera-app"
+            href="#app-riviera"
             className="rounded-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise"
           >
-            Riviera App
+            App Riviera
           </a>
           <a
             href={rivieraOpen}

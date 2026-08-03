@@ -341,7 +341,7 @@ html {
   }
 }
 
-/* Sección Riviera App.
+/* Sección App Riviera.
    En desktop el pin actúa sobre `.riviera-pin` (full-bleed, centrado).
    El contenido vive en `.riviera-inner` con márgenes simétricos para que
    al scrubelear la pelota el panel no se pegue al borde ni se descuadre. */

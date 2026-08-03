@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: "%s · APT — Acapulco Padel Tour",
   },
   description:
-    "Torneos, retas, ligas y ranking de pádel en Acapulco. Comunidad conectada al ecosistema nacional Riviera Open a través de Riviera App.",
+    "Torneos, retas, ligas y ranking de pádel en Acapulco. Comunidad conectada al ecosistema nacional Riviera Open a través de App Riviera.",
   keywords: [
     "pádel Acapulco",
     "torneos de pádel",

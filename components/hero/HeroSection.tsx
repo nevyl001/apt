@@ -39,7 +39,7 @@ export function HeroSection() {
             </div>
 
             <p className="mt-4 text-xs font-medium uppercase tracking-[0.14em] text-muted sm:text-sm">
-              Comunidad gestionada mediante Riviera App
+              Comunidad gestionada mediante App Riviera
             </p>
           </div>
 
