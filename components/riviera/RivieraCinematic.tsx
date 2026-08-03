@@ -269,8 +269,10 @@ export function RivieraCinematic() {
         </div>
       </div>
 
-      {/* Móvil / tablet: una sola escena con tabs — sin repetir las 4 etapas */}
-      <div className="riviera-viewport flex w-full lg:hidden">
+      {/* Móvil / tablet: una sola escena con tabs.
+          Visibilidad SOLO con Tailwind (`flex lg:hidden`) — no poner
+          display:flex en `.riviera-viewport` o se verá también en desktop. */}
+      <div className="riviera-viewport flex w-full flex-col items-center justify-center lg:hidden">
         <div className="apt-container w-full">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-turquoise">
             Tecnología para competir mejor

@@ -360,11 +360,11 @@ html {
   box-sizing: border-box;
 }
 
+/* Sin `display` aquí: la visibilidad la controla Tailwind
+   (`flex lg:hidden`). Si fijáramos display:flex, anularía `.lg:hidden`
+   y el layout móvil se vería también en escritorio. */
 .riviera-viewport {
   padding-block: clamp(48px, 6vw, 80px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .riviera-stage {
