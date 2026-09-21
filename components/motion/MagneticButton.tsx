@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils/cn";
 import { useReducedMotion } from "@/components/motion/ReducedMotionProvider";
 
 interface MagneticButtonProps {
-  /** Si es null, el botón se muestra deshabilitado como "Disponible próximamente" — nunca se usa "#". */
-  href: string | null;
+  /** Solo renderiza si hay href real. No pasar null: omite el botón en el padre. */
+  href: string;
   children: React.ReactNode;
   variant?: "lime" | "turquoise" | "outline" | "outline-light";
   size?: "md" | "sm";
@@ -47,7 +47,6 @@ export function MagneticButton({
   const springY = useSpring(y, { stiffness: 300, damping: 20 });
 
   function handleMove(e: React.MouseEvent<HTMLAnchorElement>) {
-    // Magnético extremadamente sutil: desplazamiento máximo de unos pocos px.
     if (reduced || !ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     x.set((e.clientX - rect.left - rect.width / 2) * 0.12);
@@ -57,22 +56,6 @@ export function MagneticButton({
   function handleLeave() {
     x.set(0);
     y.set(0);
-  }
-
-  if (href === null) {
-    return (
-      <span
-        aria-disabled="true"
-        className={cn(
-          "inline-flex cursor-not-allowed items-center gap-2 rounded-full font-medium tracking-wide opacity-50",
-          sizes[size],
-          variants[variant],
-          className,
-        )}
-      >
-        Disponible próximamente
-      </span>
-    );
   }
 
   return (

@@ -197,7 +197,7 @@ function TorneosScene() {
 
 const SCENES: Record<string, () => React.ReactElement> = {
   retas: RetasScene,
-  americano: AmericanoScene,
+  americanos: AmericanoScene,
   duelo: DueloScene,
   "torneo-express": TorneoExpressScene,
   ligas: LigasScene,
@@ -205,12 +205,12 @@ const SCENES: Record<string, () => React.ReactElement> = {
 };
 
 const SCENE_CAPTION: Record<string, string> = {
-  retas: "Partido abierto",
-  americano: "Las parejas rotan cada ronda",
-  duelo: "",
-  "torneo-express": "Grupos hacia la final",
-  ligas: "Temporada en curso",
-  torneos: "Camino a la final",
+  retas: "Partidos programados",
+  americanos: "Cambio de compañero",
+  duelo: "Enfrentamiento directo",
+  "torneo-express": "Alta intensidad",
+  ligas: "Por temporadas",
+  torneos: "Categorías y finales",
 };
 
 /**

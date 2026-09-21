@@ -1,7 +1,7 @@
 import { MapPin } from "lucide-react";
 import type { CommunityEvent, EventFormat, EventStatus } from "@/lib/types";
 import { formatEventDayMonth } from "@/lib/utils/format";
-import { whatsappEvents } from "@/lib/data/links";
+import { getWhatsAppLigaUrl } from "@/lib/data/links";
 
 const FORMAT_LABEL: Record<EventFormat, string> = {
   torneo: "Torneo",
@@ -21,9 +21,14 @@ const STATUS_CONFIG: Record<EventStatus, { label: string; className: string }> =
   completed: { label: "Finalizado", className: "bg-ink/5 text-muted" },
 };
 
+/**
+ * Tarjeta de evento para cuando existan competencias confirmadas.
+ * No se usa en home mientras `events` esté vacío.
+ */
 export function EventCard({ event }: { event: CommunityEvent }) {
   const status = STATUS_CONFIG[event.status];
   const { day, month } = formatEventDayMonth(event.startsAt);
+  const whatsapp = getWhatsAppLigaUrl();
 
   return (
     <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-white transition-shadow duration-300 hover:border-transparent hover:shadow-[0_28px_60px_-28px_rgba(0,43,107,0.32)]">
@@ -67,16 +72,18 @@ export function EventCard({ event }: { event: CommunityEvent }) {
           ))}
         </div>
 
-        <div className="mt-auto pt-6">
-          <a
-            href={whatsappEvents(event.title)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex w-full items-center justify-center rounded-full bg-lime px-5 py-3 text-sm font-medium text-navy-deep transition-colors hover:bg-lime/90"
-          >
-            Quiero inscribirme
-          </a>
-        </div>
+        {whatsapp && (
+          <div className="mt-auto pt-6">
+            <a
+              href={whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex w-full items-center justify-center rounded-full bg-lime px-5 py-3 text-sm font-medium text-navy-deep transition-colors hover:bg-lime/90"
+            >
+              Quiero inscribirme
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

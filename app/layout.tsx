@@ -21,12 +21,13 @@ export const metadata: Metadata = {
     template: "%s · APT — Acapulco Padel Tour",
   },
   description:
-    "Torneos, retas, ligas y ranking de pádel en Acapulco. Comunidad conectada al ecosistema nacional Riviera Open a través de App Riviera.",
+    "Acapulco Padel Tour organiza ligas, torneos, retas, americanos y formatos especiales con seguimiento de resultados, ranking y comunidad local en Acapulco.",
   keywords: [
+    "Acapulco Padel Tour",
     "pádel Acapulco",
+    "ligas de pádel",
     "torneos de pádel",
-    "APT Acapulco Padel Tour",
-    "Riviera Open",
+    "retas de pádel",
     "ranking de pádel",
   ],
   openGraph: {
@@ -36,14 +37,14 @@ export const metadata: Metadata = {
     siteName: "APT — Acapulco Padel Tour",
     title: "APT — Acapulco Padel Tour",
     description:
-      "Torneos, retas y competencia conectados a una experiencia nacional a través de Riviera Open.",
+      "Acapulco Padel Tour organiza ligas, torneos, retas, americanos y formatos especiales con seguimiento de resultados, ranking y comunidad local en Acapulco.",
     images: [{ url: "/brand/apt-icon-512.png", width: 512, height: 512 }],
   },
   twitter: {
     card: "summary",
     title: "APT — Acapulco Padel Tour",
     description:
-      "Torneos, retas y competencia conectados a una experiencia nacional a través de Riviera Open.",
+      "Acapulco Padel Tour organiza ligas, torneos, retas, americanos y formatos especiales con seguimiento de resultados, ranking y comunidad local en Acapulco.",
   },
   icons: {
     icon: "/brand/apt-icon-32.png",

@@ -1,9 +1,6 @@
 /**
- * Capa de datos de APT. Todas las secciones del sitio consumen datos
- * exclusivamente a través de estas funciones, que hoy leen de
- * community.ts / events.ts / sponsors.ts. El día que exista integración
- * real con App Riviera solo hay que reescribir el cuerpo de estas
- * funciones — ningún componente necesita cambiar.
+ * Capa de datos de APT. Las secciones consumen datos a través de estas
+ * funciones. Hoy leen de community.ts / events.ts / sponsors.ts.
  */
 import "server-only";
 import type { Community, CommunityEvent, Sponsor } from "@/lib/types";

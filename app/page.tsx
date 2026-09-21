@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { getUpcomingEvents } from "@/lib/data";
 import { HeroSection } from "@/components/hero/HeroSection";
 import { AboutSection } from "@/components/about/AboutSection";
 import { EventsSection } from "@/components/events/EventsSection";
@@ -11,14 +10,12 @@ export const metadata: Metadata = {
   title: "Inicio",
 };
 
-export default async function HomePage() {
-  const events = await getUpcomingEvents();
-
+export default function HomePage() {
   return (
     <>
       <HeroSection />
       <AboutSection />
-      <EventsSection events={events} />
+      <EventsSection />
       <ExperienceSection />
       <RivieraCinematic />
       <FinalCTA />

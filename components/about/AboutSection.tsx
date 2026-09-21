@@ -23,7 +23,7 @@ export function AboutSection() {
               splitBy="word"
               className="font-display text-[length:var(--heading-md)] font-bold leading-[1.05] tracking-tight text-navy-deep"
             >
-              Una comunidad nueva con una gran visión
+              Más que organizar partidos, queremos construir comunidad
             </RevealText>
           </div>
 

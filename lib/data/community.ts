@@ -1,6 +1,6 @@
 /**
- * Datos de la comunidad APT — editar directamente para mantener el sitio.
- * Sin base de datos, sin CMS: este archivo es la fuente de verdad.
+ * Datos de la comunidad APT — fuente de verdad del contenido público.
+ * Solo información oficial confirmada.
  */
 import type { Community } from "@/lib/types";
 
@@ -11,72 +11,81 @@ export const community: Community = {
   logoUrl: "/brand/apt-logo.png",
   city: "Acapulco",
   state: "Guerrero",
-  rivieraCommunityId: "PENDIENTE", // TODO: ID real de la comunidad en Riviera Open
+  rivieraCommunityId: "PENDIENTE",
 };
 
+/**
+ * Quiénes somos — dos bloques para el layout existente.
+ * Agrupa el contenido oficial sin añadir historia, fundador, visión ni pilares.
+ */
 export const aboutParagraphs: string[] = [
-  "APT — Acapulco Padel Tour nace para crear una experiencia de competencia mejor organizada, cercana y con mayor valor para cada jugador.",
-  "Gestionamos nuestras competencias mediante App Riviera para registrar resultados, ranking e historial, y conectar a nuestros jugadores con el ecosistema nacional Riviera Open.",
+  "Acapulco Padel Tour nace para ofrecer una experiencia de competencia organizada, dinámica y cercana para los jugadores de pádel de nuestra ciudad. Creamos diferentes formatos para que cada persona pueda competir de acuerdo con su nivel, disponibilidad y objetivos: desde retas y americanos hasta ligas y torneos.",
+  "Nuestra plataforma nos permite administrar inscripciones, publicar órdenes de juego, programar partidos, registrar resultados y actualizar el ranking de cada competencia. Queremos que los jugadores tengan mayor claridad, mejores experiencias y nuevas oportunidades para competir, conectar con otros jugadores y seguir creciendo dentro de la cancha.",
 ];
 
 export interface CompetitionFormat {
   /** Identificador estable — también se usa para elegir la escena visual. */
   id: string;
   name: string;
-  /** Una línea, mostrada solo bajo la fila activa de la lista. */
+  /** Una línea bajo la fila activa / resumen corto. */
   descriptor: string;
-  /** Frase corta mostrada dentro del panel visual — distinta del descriptor. */
+  /** Frase del panel visual — descripción oficial. */
   tagline: string;
-  /** Máximo tres, mostrados como texto separado por "·" dentro del panel. */
+  /** Máximo tres atributos derivados solo del contenido oficial. */
   attributes: [string, string, string];
 }
 
 /**
- * Dinámicas que APT puede organizar, mostradas solo de forma informativa.
- * Retas abre la lista a propósito: es el formato más fácil de entender y
- * la entrada natural a la sección.
+ * Formatos oficiales de APT. Sin inventar funcionalidades.
+ * 8 Loco no se publica por separado: es pádel americano.
  */
 export const competitionFormats: CompetitionFormat[] = [
   {
     id: "retas",
     name: "Retas",
-    descriptor: "Encuentros libres, sin cuadro",
-    tagline: "Partidos flexibles para competir y registrar resultados.",
-    attributes: ["Flexible", "Frecuente", "Ranking"],
+    descriptor: "Nivel similar, nuevos rivales",
+    tagline:
+      "Partidos programados entre jugadores de nivel similar para competir, conocer nuevos rivales y mantenerse activos.",
+    attributes: ["Nivel similar", "Nuevos rivales", "Mantenerse activo"],
   },
   {
-    id: "americano",
-    name: "Americano",
-    descriptor: "Rotación de parejas, puntos individuales",
-    tagline: "Cambias de pareja en cada ronda y sumas puntos propios.",
-    attributes: ["Rotación", "Individual", "Dinámico"],
+    id: "americanos",
+    name: "Americanos",
+    descriptor: "Cambio de compañero, puntos individuales",
+    tagline:
+      "Formato dinámico en el que los jugadores cambian de compañero y acumulan puntos de manera individual.",
+    attributes: ["Cambio de compañero", "Puntos individuales", "Formato dinámico"],
   },
   {
     id: "duelo",
-    name: "Duelo 2 vs 2",
-    descriptor: "Enfrentamiento directo entre parejas",
-    tagline: "Dos parejas fijas, un resultado directo.",
-    attributes: ["Parejas fijas", "Directo", "Inmediato"],
+    name: "Duelo 2 vs. 2",
+    descriptor: "Pareja contra pareja",
+    tagline:
+      "Una pareja contra otra en un enfrentamiento directo. Ideal para crear rivalidades deportivas y poner a prueba el trabajo en equipo.",
+    attributes: ["Pareja contra pareja", "Enfrentamiento directo", "Trabajo en equipo"],
   },
   {
     id: "torneo-express",
-    name: "Torneo Express",
-    descriptor: "Una jornada, grupos y final",
-    tagline: "Grupos rápidos con una final el mismo día.",
-    attributes: ["Una jornada", "Grupos", "Ritmo rápido"],
+    name: "Torneos Express",
+    descriptor: "Corta duración, alta intensidad",
+    tagline:
+      "Competencias de corta duración y alta intensidad para vivir toda la emoción de un torneo en una sola jornada o fin de semana.",
+    attributes: ["Corta duración", "Alta intensidad", "Una jornada"],
   },
   {
     id: "ligas",
     name: "Ligas",
-    descriptor: "Temporada con tabla general",
-    tagline: "Jornadas programadas y una tabla que avanza contigo.",
-    attributes: ["Temporada", "Tabla", "Constancia"],
+    descriptor: "Temporadas, tabla y ranking",
+    tagline:
+      "Competencias por temporadas, con programación de partidos, seguimiento de resultados, tabla de posiciones y ranking.",
+    attributes: ["Temporadas", "Tabla de posiciones", "Ranking"],
   },
   {
     id: "torneos",
     name: "Torneos",
-    descriptor: "Categorías y cuadro eliminatorio",
-    tagline: "Categorías y fases con un camino directo a la final.",
-    attributes: ["Categorías", "Eliminación", "Campeones"],
+    descriptor: "Categorías, grupos y finales",
+    tagline:
+      "Eventos estructurados por categorías, con fase de grupos, eliminatorias y finales.",
+    attributes: ["Categorías", "Fase de grupos", "Finales"],
   },
 ];

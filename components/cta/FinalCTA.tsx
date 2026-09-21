@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { RevealText } from "@/components/motion/RevealText";
 import { useReducedMotion } from "@/components/motion/ReducedMotionProvider";
-import { whatsappCommunity } from "@/lib/data/links";
+import { getWhatsAppGeneralUrl } from "@/lib/data/links";
 import { motionTokens } from "@/lib/motion/tokens";
 
 const TRAIL_D =
@@ -17,6 +17,7 @@ const BALL_KEYFRAMES = {
 
 export function FinalCTA() {
   const reduced = useReducedMotion();
+  const whatsappGeneral = getWhatsAppGeneralUrl();
 
   return (
     <section
@@ -25,7 +26,6 @@ export function FinalCTA() {
     >
       <div className="apt-grain" />
 
-      {/* Cancha abstracta a sangre — hilo visual heredado de App Riviera */}
       <svg
         aria-hidden
         viewBox="0 0 1600 700"
@@ -78,16 +78,16 @@ export function FinalCTA() {
       <div className="final-cta-inner relative">
         <div className="final-cta-copy">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-turquoise">
-            Únete a la comunidad
+            Acapulco Padel Tour
           </p>
           <h2 className="final-cta-title font-display mt-3 font-bold uppercase text-white">
             <RevealText as="span" splitBy="word">
-              Tu próximo partido puede empezar aquí
+              Tu próximo reto comienza en APT
             </RevealText>
           </h2>
           <p className="mt-5 max-w-md text-[length:var(--text-body)] leading-relaxed text-white/70">
-            Únete a APT y forma parte de una comunidad creada para competir,
-            crecer y disfrutar el pádel.
+            Compite contra nuevos jugadores, mide tu progreso y forma parte de
+            una comunidad creada para hacer crecer el pádel en Acapulco.
           </p>
         </div>
 
@@ -98,11 +98,18 @@ export function FinalCTA() {
           transition={{ duration: motionTokens.reveal, delay: 0.15, ease: motionTokens.easePremium }}
           className="flex flex-col items-start gap-4"
         >
-          <MagneticButton href={whatsappCommunity} variant="lime" external>
-            Unirme por WhatsApp
-          </MagneticButton>
+          <div className="flex flex-wrap items-center gap-3">
+            <MagneticButton href="#eventos" variant="lime">
+              Inscríbete a la Liga APT
+            </MagneticButton>
+            {whatsappGeneral && (
+              <MagneticButton href={whatsappGeneral} variant="outline-light" external>
+                Solicita información por WhatsApp
+              </MagneticButton>
+            )}
+          </div>
           <p className="text-xs font-medium uppercase tracking-[0.14em] text-white/40">
-            Comunidad de pádel en Acapulco, Guerrero
+            Acapulco, Guerrero, México
           </p>
         </motion.div>
       </div>

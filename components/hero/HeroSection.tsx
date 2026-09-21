@@ -1,9 +1,8 @@
 import { ChevronDown } from "lucide-react";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { HeroVisual } from "@/components/hero/HeroVisual";
-import { whatsappCommunity } from "@/lib/data/links";
 
-const TITLE_LINES = ["Compite.", "Conecta.", "Crece."];
+const TITLE_LINES = ["Compite.", "Conecta.", "Evoluciona."];
 
 export function HeroSection() {
   return (
@@ -24,22 +23,26 @@ export function HeroSection() {
             </h1>
 
             <p className="mt-4 max-w-md text-[length:var(--text-body)] leading-relaxed text-muted">
-              Una nueva comunidad de pádel en Acapulco creada para organizar
-              mejores competencias, conectar jugadores y hacer que cada
-              partido cuente.
+              Una nueva comunidad creada para transformar la manera de competir
+              en Acapulco.
+            </p>
+            <p className="mt-3 max-w-md text-[length:var(--text-small)] leading-relaxed text-muted">
+              Organizamos ligas, torneos, retas, americanos y formatos
+              especiales con una estructura clara, seguimiento de resultados y
+              una plataforma digital que hace que cada partido cuente.
             </p>
 
             <div className="mt-5 flex flex-wrap items-center gap-3 sm:gap-4">
-              <MagneticButton href={whatsappCommunity} variant="lime" external>
-                Unirme a APT
+              <MagneticButton href="#eventos" variant="lime">
+                Inscríbete a la primera Liga APT
               </MagneticButton>
-              <MagneticButton href="#eventos" variant="outline">
-                Ver próximos eventos
+              <MagneticButton href="#experiencia" variant="outline">
+                Conoce nuestros formatos
               </MagneticButton>
             </div>
 
             <p className="mt-4 text-xs font-medium uppercase tracking-[0.14em] text-muted sm:text-sm">
-              Comunidad gestionada mediante App Riviera
+              Competencias organizadas · Ranking actualizado · Comunidad local
             </p>
           </div>
 

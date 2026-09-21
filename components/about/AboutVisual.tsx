@@ -23,8 +23,8 @@ const PILLAR_TAGS: Pillar[] = [
   },
   {
     number: "03",
-    label: "Proyección nacional",
-    value: "Riviera Open",
+    label: "Plataforma",
+    value: "Ranking y resultados",
     dot: "bg-white",
     style: { top: "64%", left: "6%" },
   },

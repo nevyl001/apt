@@ -2,7 +2,6 @@
 
 import type { RefObject } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { rivieraOpen } from "@/lib/data/links";
 import { EASE_SECONDARY } from "@/lib/motion/tokens";
 
 const PLAYERS = [
@@ -11,7 +10,7 @@ const PLAYERS = [
   { x: 160, y: 260 },
 ];
 
-const NETWORK_NODES = [
+const COMMUNITY_NODES = [
   { x: 90, y: 70 },
   { x: 410, y: 90 },
   { x: 70, y: 310 },
@@ -31,11 +30,8 @@ interface RivieraSceneProps {
 }
 
 /**
- * Escena de escritorio: la misma cancha que RivieraVisual, pero la pelota
- * la controla GSAP MotionPath desde el padre (RivieraCinematic) a través
- * de `ballRef`/`trajectoryRef` — su posición está atada al scrub del pin,
- * no a `stage`. Las etiquetas (marcador, historial, ranking, red) sí
- * reaccionan a `stage`, igual que en la versión estática.
+ * Escena de escritorio (0–4): Inscribete → Consulta → Compite → Avanza → Conecta.
+ * Pelota controlada por GSAP MotionPath desde RivieraCinematic.
  */
 export function RivieraScene({ stage, ballRef, trajectoryRef }: RivieraSceneProps) {
   return (
@@ -61,16 +57,15 @@ export function RivieraScene({ stage, ballRef, trajectoryRef }: RivieraSceneProp
           x2="362"
           y2="195"
           stroke="var(--apt-turquoise)"
-          strokeWidth={stage >= 1 ? 2.5 : 1.5}
-          strokeOpacity={stage >= 1 ? 0.7 : 0.4}
-          strokeDasharray={stage >= 1 ? "0" : "3 6"}
+          strokeWidth={stage >= 2 ? 2.5 : 1.5}
+          strokeOpacity={stage >= 2 ? 0.7 : 0.4}
+          strokeDasharray={stage >= 2 ? "0" : "3 6"}
         />
 
         {PLAYERS.map((p, i) => (
           <circle key={i} cx={p.x} cy={p.y} r="6" fill="var(--apt-white)" fillOpacity={0.85} />
         ))}
 
-        {/* Trayectoria completa de la pelota — visible como hilo de fondo */}
         <path
           ref={trajectoryRef}
           d={TRAJECTORY_D}
@@ -83,7 +78,7 @@ export function RivieraScene({ stage, ballRef, trajectoryRef }: RivieraSceneProp
         <circle ref={ballRef} cx="30" cy="340" r="7" fill="var(--apt-lime)" />
 
         <AnimatePresence>
-          {stage >= 2 && (
+          {stage >= 3 && (
             <motion.g
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -106,8 +101,8 @@ export function RivieraScene({ stage, ballRef, trajectoryRef }: RivieraSceneProp
         </AnimatePresence>
 
         <AnimatePresence>
-          {stage >= 3 &&
-            NETWORK_NODES.map((n, i) => (
+          {stage >= 4 &&
+            COMMUNITY_NODES.map((n, i) => (
               <motion.g
                 key={i}
                 initial={{ opacity: 0 }}
@@ -130,7 +125,7 @@ export function RivieraScene({ stage, ballRef, trajectoryRef }: RivieraSceneProp
             ))}
         </AnimatePresence>
         <AnimatePresence>
-          {stage >= 3 && (
+          {stage >= 4 && (
             <motion.circle
               cx={ORIGIN.x}
               cy={ORIGIN.y}
@@ -149,9 +144,9 @@ export function RivieraScene({ stage, ballRef, trajectoryRef }: RivieraSceneProp
 
       <div className="absolute left-6 top-6 flex flex-col items-start gap-2 sm:left-8 sm:top-8">
         <span className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 backdrop-blur-sm">
-          <span className={`size-1.5 shrink-0 rounded-full ${stage >= 1 ? "bg-lime" : "bg-white"}`} />
+          <span className="size-1.5 shrink-0 rounded-full bg-white" />
           <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/80">
-            {stage >= 1 ? "Resultado confirmado" : "Partido en curso"}
+            Inscripción
           </span>
         </span>
 
@@ -166,7 +161,7 @@ export function RivieraScene({ stage, ballRef, trajectoryRef }: RivieraSceneProp
             >
               <span className="size-1.5 shrink-0 rounded-full bg-turquoise" />
               <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/80">
-                Historial
+                Programación
               </span>
             </motion.span>
           )}
@@ -183,9 +178,26 @@ export function RivieraScene({ stage, ballRef, trajectoryRef }: RivieraSceneProp
             >
               <span className="size-1.5 shrink-0 rounded-full bg-lime" />
               <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/80">
-                Ranking local
+                Resultados
               </span>
-              <span className="text-[10px] text-white/45">Riviera ID</span>
+            </motion.span>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {stage >= 3 && (
+            <motion.span
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -12 }}
+              transition={{ duration: 0.4, ease: EASE_SECONDARY, delay: 0.08 }}
+              className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 backdrop-blur-sm"
+            >
+              <span className="size-1.5 shrink-0 rounded-full bg-turquoise" />
+              <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/80">
+                Ranking
+              </span>
+              <span className="text-[10px] text-white/45">Historial</span>
             </motion.span>
           )}
         </AnimatePresence>
@@ -193,23 +205,19 @@ export function RivieraScene({ stage, ballRef, trajectoryRef }: RivieraSceneProp
 
       <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between sm:bottom-8 sm:left-8 sm:right-8">
         <p className="text-xs font-medium uppercase tracking-[0.16em] text-white/40">
-          App Riviera
+          Plataforma APT
         </p>
         <AnimatePresence>
-          {stage >= 3 && (
-            <motion.a
-              href={rivieraOpen}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Ir al sitio oficial de Riviera Open"
+          {stage >= 4 && (
+            <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4 }}
-              className="font-display rounded-sm text-xs font-bold uppercase tracking-[0.16em] text-turquoise underline decoration-turquoise/40 underline-offset-4 transition-colors hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise"
+              className="font-display text-xs font-bold uppercase tracking-[0.16em] text-turquoise"
             >
-              Riviera Open
-            </motion.a>
+              Comunidad
+            </motion.span>
           )}
         </AnimatePresence>
       </div>

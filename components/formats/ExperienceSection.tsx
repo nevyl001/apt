@@ -110,14 +110,14 @@ export function ExperienceSection() {
           <div className="formats-copy">
             <header className="formats-heading">
               <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-turquoise">
-                Formas de competir
+                Formatos de competencia
               </p>
               <h2 className="formats-title font-display font-bold text-navy-deep">
-                Elige cómo quieres jugar
+                Elige cómo quieres competir
               </h2>
               <p className="formats-lead text-muted">
-                APT organiza desde encuentros casuales hasta ligas y torneos
-                completos.
+                En APT desarrollamos diferentes experiencias para adaptarnos al
+                nivel, tiempo y objetivos de cada jugador.
               </p>
             </header>
 

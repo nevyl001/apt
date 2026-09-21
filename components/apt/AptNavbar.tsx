@@ -6,15 +6,14 @@ import { Menu, X } from "lucide-react";
 import { AptLogo } from "@/components/apt/AptLogo";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { cn } from "@/lib/utils/cn";
-import { whatsappCommunity } from "@/lib/data/links";
 import { DURATION, EASE_SECONDARY, STAGGER } from "@/lib/motion/tokens";
 
 const NAV_ITEMS = [
   { href: "#inicio", label: "Inicio" },
   { href: "#nosotros", label: "Nosotros" },
-  { href: "#eventos", label: "Eventos" },
-  { href: "#experiencia", label: "Experiencia APT" },
-  { href: "#app-riviera", label: "App Riviera" },
+  { href: "#eventos", label: "Liga APT" },
+  { href: "#experiencia", label: "Formatos" },
+  { href: "#tecnologia", label: "Plataforma" },
   { href: "#contacto", label: "Contacto" },
 ];
 
@@ -67,8 +66,6 @@ export function AptNavbar() {
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
   ) {
-    // Inicio = tope real de página; el ancla #inicio con scroll nativo
-    // tapaba el título bajo el header fixed.
     if (href === "#inicio") {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -113,14 +110,8 @@ export function AptNavbar() {
 
           <div className="flex items-center justify-end gap-3">
             <div className="hidden sm:block">
-              <MagneticButton
-                href={whatsappCommunity}
-                variant="lime"
-                size="sm"
-                showArrow={false}
-                external
-              >
-                Unirme a APT
+              <MagneticButton href="#eventos" variant="lime" size="sm" showArrow={false}>
+                Inscríbete a la Liga APT
               </MagneticButton>
             </div>
 
@@ -137,8 +128,6 @@ export function AptNavbar() {
         </nav>
       </header>
 
-      {/* Overlay fuera del header: backdrop-filter en el header atrapa
-          position:fixed y deja el fondo sin cubrir la pantalla. */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -172,13 +161,12 @@ export function AptNavbar() {
                 ))}
               </ul>
               <MagneticButton
-                href={whatsappCommunity}
+                href="#eventos"
                 variant="lime"
                 showArrow={false}
                 className="w-full justify-center"
-                external
               >
-                Unirme a APT
+                Inscríbete a la Liga APT
               </MagneticButton>
             </div>
           </motion.div>
