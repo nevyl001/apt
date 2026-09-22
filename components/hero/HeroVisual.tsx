@@ -7,20 +7,20 @@ interface Tag {
 
 const TAGS: Tag[] = [
   {
-    label: "Ranking",
-    value: "Nº 12 estatal",
+    label: "Competencia",
+    value: "Organizada",
     dot: "bg-turquoise",
     style: { top: "max(20px, 10%)", left: "max(20px, 8%)" },
   },
   {
-    label: "Historial",
-    value: "34 sets jugados",
+    label: "Resultados",
+    value: "Con seguimiento",
     dot: "bg-lime",
     style: { top: "max(20px, 38%)", right: "max(20px, 6%)" },
   },
   {
     label: "Comunidad",
-    value: "180+ jugadores",
+    value: "Local en Acapulco",
     dot: "bg-white",
     style: { top: "max(20px, 54%)", left: "max(20px, 10%)" },
   },
@@ -110,29 +110,25 @@ export function HeroVisual() {
         </g>
       </svg>
 
-      {TAGS.map((tag) => (
+          {TAGS.map((tag) => (
         <div
           key={tag.label}
-          className="absolute flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 backdrop-blur-sm"
+          className="absolute flex max-w-[calc(100%-2rem)] items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-1.5 backdrop-blur-sm sm:gap-2 sm:px-3"
           style={tag.style}
         >
           <span className={`size-1.5 shrink-0 rounded-full ${tag.dot}`} />
-          <span className="whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.14em] text-white/80">
+          <span className="truncate text-[9px] font-semibold uppercase tracking-[0.12em] text-white/80 sm:text-[10px] sm:tracking-[0.14em]">
             {tag.label}
           </span>
-          <span className="whitespace-nowrap text-[10px] text-white/45">{tag.value}</span>
+          <span className="hidden truncate text-[10px] text-white/45 sm:inline">
+            {tag.value}
+          </span>
         </div>
       ))}
 
-      <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between sm:bottom-8 sm:left-8 sm:right-8">
-        <div>
-          <p className="text-xs font-medium uppercase tracking-[0.16em] text-white/55">
-            Acapulco, Guerrero
-          </p>
-          <p className="mt-0.5 text-[11px] text-white/30">16.8531° N, 99.8237° W</p>
-        </div>
-        <p className="font-display text-xs font-bold uppercase tracking-[0.16em] text-turquoise">
-          Est. 2026
+      <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between sm:bottom-8 sm:left-8 sm:right-8">
+        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/55 sm:text-xs">
+          Acapulco, Guerrero
         </p>
       </div>
     </div>

@@ -121,12 +121,14 @@ export function AboutVisual() {
       {PILLAR_TAGS.map((p) => (
         <div
           key={p.number}
-          className="absolute flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 backdrop-blur-sm"
+          className="absolute flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-1.5 backdrop-blur-sm sm:gap-2 sm:px-3"
           style={p.style}
         >
-          <span className="text-[10px] font-bold text-white/40">{p.number}</span>
+          <span className="hidden text-[10px] font-bold text-white/40 sm:inline">
+            {p.number}
+          </span>
           <span className={`size-1.5 shrink-0 rounded-full ${p.dot}`} />
-          <span className="whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.14em] text-white/80">
+          <span className="whitespace-nowrap text-[9px] font-semibold uppercase tracking-[0.12em] text-white/80 sm:text-[10px] sm:tracking-[0.14em]">
             {p.label}
           </span>
           <span className="hidden whitespace-nowrap text-[10px] text-white/45 sm:inline">

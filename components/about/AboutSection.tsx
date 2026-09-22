@@ -13,15 +13,15 @@ export function AboutSection() {
   return (
     <section id="nosotros" className="apt-section apt-section--sm scroll-mt-20">
       <div className="apt-container">
-        <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
+        <div className="grid gap-5 lg:grid-cols-2 lg:gap-16">
           <div>
-            <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-turquoise">
+            <p className="mb-2.5 text-[11px] font-medium uppercase tracking-[0.18em] text-turquoise sm:mb-3 sm:text-xs sm:tracking-[0.2em]">
               Quiénes somos
             </p>
             <RevealText
               as="h2"
               splitBy="word"
-              className="font-display text-[length:var(--heading-md)] font-bold leading-[1.05] tracking-tight text-navy-deep"
+              className="font-display max-w-[18ch] text-[length:var(--heading-md)] font-bold leading-[1.08] tracking-tight text-navy-deep"
             >
               Más que organizar partidos, queremos construir comunidad
             </RevealText>
@@ -42,7 +42,7 @@ export function AboutSection() {
           whileInView={reduced ? undefined : { opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-10%" }}
           transition={{ duration: DURATION.section, ease: EASE_PRIMARY }}
-          className="about-visual-frame mt-10 lg:mt-14"
+          className="about-visual-frame mt-8 lg:mt-14"
         >
           <AboutVisual />
         </motion.div>

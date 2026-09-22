@@ -4,11 +4,13 @@ con canal alfa transparente. No redibuja, no recolorea, no deforma:
 unicamente vuelve transparentes los pixeles de fondo (blanco/casi blanco)
 conservando intactos los pixeles del logotipo original.
 """
+from pathlib import Path
 from PIL import Image
-import sys
 
-SRC = "/Users/nevyldev/Documents/ATPADEL/brand/WhatsApp Image 2026-07-06 at 19.51.53.jpeg"
-OUT_DIR = "/Users/nevyldev/Documents/ATPADEL/brand/processed"
+ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / "public" / "brand" / "apt-logo-original.jpg"
+OUT_DIR = ROOT / "public" / "brand"
+APP_DIR = ROOT / "app"
 
 img = Image.open(SRC).convert("RGBA")
 datas = img.getdata()
@@ -23,20 +25,21 @@ for r, g, b, a in datas:
 
 img.putdata(new_data)
 
-# recorte al bounding box del contenido no transparente
 bbox = img.getbbox()
 if bbox:
     img = img.crop(bbox)
 
-img.save(f"{OUT_DIR}/apt-logo.png")
+img.save(OUT_DIR / "apt-logo.png")
 
-# Favicon / touch icon (fondo transparente, cuadrado, con margen)
 size = max(img.size)
 square = Image.new("RGBA", (size, size), (0, 0, 0, 0))
 square.paste(img, ((size - img.width) // 2, (size - img.height) // 2), img)
 
 for px in (32, 180, 512):
     resized = square.resize((px, px), Image.LANCZOS)
-    resized.save(f"{OUT_DIR}/apt-icon-{px}.png")
+    resized.save(OUT_DIR / f"apt-icon-{px}.png")
 
-print("done", img.size)
+square.resize((512, 512), Image.LANCZOS).save(APP_DIR / "icon.png")
+square.resize((180, 180), Image.LANCZOS).save(APP_DIR / "apple-icon.png")
+
+print("done", img.size, "ratio", round(img.width / img.height, 4))

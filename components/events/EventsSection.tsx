@@ -18,24 +18,24 @@ export function EventsSection() {
   return (
     <section id="eventos" className="apt-section apt-section--sm scroll-mt-20">
       <div className="apt-container">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+        <div className="liga-layout">
           <div>
-            <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-turquoise">
+            <p className="mb-2.5 text-[11px] font-medium uppercase tracking-[0.18em] text-turquoise sm:mb-3 sm:text-xs sm:tracking-[0.2em]">
               Primera Liga Acapulco Padel Tour
             </p>
             <RevealText
               as="h2"
               splitBy="word"
-              className="font-display text-[length:var(--heading-md)] font-bold leading-[1.05] tracking-tight text-navy-deep"
+              className="font-display max-w-[16ch] text-[length:var(--heading-md)] font-bold leading-[1.08] tracking-tight text-navy-deep"
             >
               Tu próxima competencia comienza aquí
             </RevealText>
-            <p className="mt-5 max-w-xl text-[length:var(--text-body)] leading-relaxed text-muted">
+            <p className="mt-4 max-w-xl text-[length:var(--text-body)] leading-relaxed text-muted sm:mt-5">
               Llega la primera temporada de la Liga APT, una competencia creada
               para ofrecer partidos organizados, seguimiento de resultados y una
               experiencia que mantenga activa a la comunidad.
             </p>
-            <p className="mt-3 max-w-xl text-[length:var(--text-body)] leading-relaxed text-muted">
+            <p className="mt-2.5 max-w-xl text-[length:var(--text-small)] leading-relaxed text-muted sm:mt-3 sm:text-[length:var(--text-body)]">
               Consulta tus partidos, registra tus resultados, sigue tu posición
               y compite por avanzar dentro del ranking de la liga.
             </p>
@@ -45,7 +45,7 @@ export function EventsSection() {
               whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: DURATION.reveal, ease: EASE_SECONDARY }}
-              className="mt-8 flex flex-wrap items-center gap-3"
+              className="liga-cta mt-6 sm:mt-8"
             >
               {whatsappLiga ? (
                 <MagneticButton href={whatsappLiga} variant="lime" external>
@@ -64,26 +64,26 @@ export function EventsSection() {
             whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: DURATION.section, ease: EASE_SECONDARY }}
-            className="relative overflow-hidden rounded-3xl bg-navy-deep p-8 text-white sm:p-10"
+            className="liga-panel"
           >
             <div className="apt-grain" />
-            <p className="relative text-xs font-medium uppercase tracking-[0.18em] text-turquoise">
+            <p className="relative text-[11px] font-medium uppercase tracking-[0.18em] text-turquoise">
               Liga APT
             </p>
-            <h3 className="font-display relative mt-3 text-2xl font-bold uppercase leading-tight sm:text-3xl">
+            <h3 className="font-display relative mt-2.5 text-xl font-bold uppercase leading-tight sm:mt-3 sm:text-3xl">
               Primera temporada
             </h3>
-            <ul className="relative mt-8 space-y-4 text-sm leading-relaxed text-white/70">
-              <li className="border-t border-white/10 pt-4">
+            <ul className="relative mt-6 space-y-0 text-sm leading-relaxed text-white/70 sm:mt-8">
+              <li className="border-t border-white/10 py-3.5 sm:py-4">
                 Partidos organizados con seguimiento de resultados
               </li>
-              <li className="border-t border-white/10 pt-4">
+              <li className="border-t border-white/10 py-3.5 sm:py-4">
                 Consulta de partidos y registro de marcadores
               </li>
-              <li className="border-t border-white/10 pt-4">
+              <li className="border-t border-white/10 py-3.5 sm:py-4">
                 Ranking y posición dentro de la liga
               </li>
-              <li className="border-t border-white/10 pt-4">
+              <li className="border-t border-white/10 py-3.5 sm:pb-0 sm:pt-4">
                 Comunidad local activa en Acapulco
               </li>
             </ul>

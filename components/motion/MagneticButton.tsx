@@ -61,7 +61,7 @@ export function MagneticButton({
   return (
     <motion.div
       style={reduced ? undefined : { x: springX, y: springY }}
-      className="inline-block"
+      className="inline-block w-full sm:w-auto"
     >
       <Link
         ref={ref}

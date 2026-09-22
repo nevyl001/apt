@@ -10,28 +10,24 @@ interface AptLogoProps {
   className?: string;
 }
 
+/** Archivo en public/brand; unoptimized evita caché vieja de next/image. */
 const LOGO_SRC = "/brand/apt-logo.png";
 
 /**
- * Relación real del archivo oficial recortado (1010 × 894 px, sin margen
- * exterior): un lockup casi cuadrado (símbolo + "ACAPULCO PADEL TOUR"
- * apilado debajo), no un lockup horizontal ancho. Con la altura de navbar
- * de esta dirección (72–80 px), un ancho de 110–130 px solo es alcanzable
- * deformando el archivo — algo que la marca prohíbe explícitamente. Se
- * prioriza conservar la proporción real y que el símbolo quede legible
- * dentro del navbar; el ancho resultante es menor al target ideal.
+ * Relación real del archivo oficial recortado (símbolo AiP + wordmark).
+ * No deformar la marca.
  */
-const LOGO_RATIO = 1010 / 894;
+const LOGO_RATIO = 946 / 798;
 
 const BASE_HEIGHT: Record<NonNullable<AptLogoProps["variant"]>, number> = {
-  navbar: 60,
-  footer: 52,
+  navbar: 56,
+  footer: 48,
   default: 44,
 };
 
 const SIZE_CLASSES: Record<NonNullable<AptLogoProps["variant"]>, string> = {
-  navbar: "h-9 w-auto sm:h-11 lg:h-[60px]",
-  footer: "h-12 w-auto",
+  navbar: "h-10 w-auto sm:h-12 lg:h-14",
+  footer: "h-11 w-auto",
   default: "h-11 w-auto",
 };
 
@@ -51,7 +47,8 @@ export function AptLogo({
       width={baseWidth}
       height={baseHeight}
       priority={priority}
-      sizes="(max-width: 640px) 100px, 140px"
+      unoptimized
+      sizes="(max-width: 640px) 120px, 168px"
       className={cn("object-contain object-left", SIZE_CLASSES[variant])}
     />
   );

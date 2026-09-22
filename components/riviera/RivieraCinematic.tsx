@@ -58,7 +58,7 @@ function StageControls({
 }) {
   return (
     <div
-      className="flex flex-wrap gap-2"
+      className="riviera-tabs"
       role="tablist"
       aria-label="Pasos de la plataforma APT"
     >
@@ -70,7 +70,7 @@ function StageControls({
           onClick={() => onSelect(i)}
           aria-selected={i === stage}
           aria-controls="plataforma-stage-panel"
-          className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.1em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turquoise ${
+          className={`riviera-tab rounded-full border px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turquoise sm:px-4 sm:text-xs sm:tracking-[0.1em] ${
             i === stage
               ? "border-turquoise/60 bg-turquoise/10 text-turquoise"
               : "border-white/15 text-white/55 hover:border-white/30 hover:text-white/85"
@@ -247,19 +247,19 @@ export function RivieraCinematic() {
 
       <div className="riviera-viewport flex w-full flex-col items-center justify-center lg:hidden">
         <div className="apt-container w-full">
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-turquoise">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-turquoise">
             Tecnología para competir mejor
           </p>
-          <h2 className="font-display mt-3 max-w-2xl text-[length:var(--heading-sm)] font-bold uppercase leading-[1.05] text-white">
+          <h2 className="font-display mt-2.5 max-w-xl text-[length:var(--heading-sm)] font-bold uppercase leading-[1.08] text-white">
             Toda tu competencia en un mismo lugar
           </h2>
-          <p className="mt-3 max-w-xl text-[length:var(--text-body)] leading-relaxed text-white/65">
+          <p className="mt-3 max-w-xl text-[length:var(--text-small)] leading-relaxed text-white/65">
             Nuestra plataforma digital facilita el seguimiento de cada evento y
             permite que los jugadores tengan acceso a la información más
             importante de su participación.
           </p>
 
-          <div className="mt-6 flex flex-col gap-6">
+          <div className="mt-5 flex flex-col gap-5">
             <StageControls stage={mobileStage} onSelect={setMobileStage} />
             <div className="riviera-visual-frame">
               <RivieraVisual stage={mobileStage} />

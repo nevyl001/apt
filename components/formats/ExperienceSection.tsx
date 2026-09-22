@@ -159,7 +159,7 @@ export function ExperienceSection() {
                   aria-pressed={active === i}
                   onClick={() => selectMobile(i)}
                   className={cn(
-                    "formats-tab rounded-full border px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turquoise",
+                    "formats-tab rounded-full border px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.08em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turquoise",
                     active === i
                       ? "border-turquoise/50 bg-turquoise/10 text-navy-deep"
                       : "border-border text-ink/55 hover:border-navy/30",
