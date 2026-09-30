@@ -27,7 +27,7 @@ export const INSTAGRAMS = [
   },
   {
     handle: "lozadapadelacademy",
-    label: "Lozada Padel Academy",
+    label: "Lozada Academy",
     url: "https://www.instagram.com/lozadapadelacademy",
   },
 ] as const;

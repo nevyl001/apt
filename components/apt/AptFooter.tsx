@@ -1,3 +1,4 @@
+import { Instagram, MessageCircle } from "lucide-react";
 import { AptLogo } from "@/components/apt/AptLogo";
 import {
   getMapsUrl,
@@ -8,7 +9,7 @@ import {
 } from "@/lib/data/links";
 
 const linkClass =
-  "rounded-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise";
+  "inline-flex items-center gap-2 rounded-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise";
 
 export function AptFooter() {
   return (
@@ -35,32 +36,42 @@ export function AptFooter() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 text-sm text-white/60">
-          <a href="#eventos" className={linkClass}>
+        <div className="flex flex-col gap-4 text-sm text-white/60">
+          <a href="#eventos" className="w-fit rounded-sm transition-colors hover:text-white">
             Próximos eventos
           </a>
-          {INSTAGRAMS.map((profile) => (
-            <a
-              key={profile.handle}
-              href={profile.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={linkClass}
-            >
-              Instagram @{profile.handle}
-            </a>
-          ))}
-          {WHATSAPP_NUMBERS.map((contact) => (
-            <a
-              key={contact.phone}
-              href={getWhatsAppGeneralUrl(contact.phone)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={linkClass}
-            >
-              WhatsApp {contact.display}
-            </a>
-          ))}
+
+          <div className="flex flex-col gap-2.5">
+            {INSTAGRAMS.map((profile) => (
+              <a
+                key={profile.handle}
+                href={profile.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={profile.label}
+                className={linkClass}
+              >
+                <Instagram aria-hidden className="size-4 shrink-0" />
+                {profile.label}
+              </a>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            {WHATSAPP_NUMBERS.map((contact) => (
+              <a
+                key={contact.phone}
+                href={getWhatsAppGeneralUrl(contact.phone)}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`WhatsApp ${contact.display}`}
+                className={linkClass}
+              >
+                <MessageCircle aria-hidden className="size-4 shrink-0" />
+                {contact.display}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </footer>
