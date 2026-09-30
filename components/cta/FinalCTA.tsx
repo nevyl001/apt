@@ -4,7 +4,13 @@ import { motion } from "motion/react";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { RevealText } from "@/components/motion/RevealText";
 import { useReducedMotion } from "@/components/motion/ReducedMotionProvider";
-import { getWhatsAppGeneralUrl } from "@/lib/data/links";
+import {
+  getMapsUrl,
+  getWhatsAppGeneralUrl,
+  INSTAGRAMS,
+  VENUE,
+  WHATSAPP_NUMBERS,
+} from "@/lib/data/links";
 import { motionTokens } from "@/lib/motion/tokens";
 
 const TRAIL_D =
@@ -98,19 +104,49 @@ export function FinalCTA() {
           transition={{ duration: motionTokens.reveal, delay: 0.15, ease: motionTokens.easePremium }}
           className="flex flex-col items-start gap-4"
         >
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <MagneticButton href="#eventos" variant="lime">
               Inscríbete a la Liga APT
             </MagneticButton>
-            {whatsappGeneral && (
-              <MagneticButton href={whatsappGeneral} variant="outline-light" external>
-                Solicita información por WhatsApp
-              </MagneticButton>
-            )}
+            <MagneticButton href={whatsappGeneral} variant="outline-light" external>
+              Solicita información por WhatsApp
+            </MagneticButton>
           </div>
-          <p className="text-xs font-medium uppercase tracking-[0.14em] text-white/40">
-            Acapulco, Guerrero, México
-          </p>
+          <div className="flex flex-col gap-2 text-sm text-white/70">
+            {WHATSAPP_NUMBERS.map((contact) => (
+              <a
+                key={contact.phone}
+                href={getWhatsAppGeneralUrl(contact.phone)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-fit rounded-sm underline decoration-white/20 underline-offset-4 transition-colors hover:text-white"
+              >
+                WhatsApp {contact.display}
+              </a>
+            ))}
+            {INSTAGRAMS.map((profile) => (
+              <a
+                key={profile.handle}
+                href={profile.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-fit rounded-sm underline decoration-white/20 underline-offset-4 transition-colors hover:text-white"
+              >
+                Instagram @{profile.handle}
+              </a>
+            ))}
+          </div>
+          <a
+            href={getMapsUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="max-w-sm text-xs font-medium uppercase leading-relaxed tracking-[0.12em] text-white/40 transition-colors hover:text-white/70"
+          >
+            {VENUE.name}
+            <span className="mt-1 block normal-case tracking-normal">
+              {VENUE.address}
+            </span>
+          </a>
         </motion.div>
       </div>
     </section>
